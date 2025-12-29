@@ -8,11 +8,16 @@ interface Order {
   type: string;
 }
 
-function getDaysSince(dateStr: string): number {
+function getTimeSince(dateStr: string): { value: number; unit: "hours" | "days" } {
   const orderDate = new Date(dateStr);
   const today = new Date();
-  const diffTime = today.getTime() - orderDate.getTime();
-  return Math.floor(diffTime / (1000 * 60 * 60 * 24));
+  const diffMs = today.getTime() - orderDate.getTime();
+  const hours = Math.floor(diffMs / (1000 * 60 * 60));
+
+  if (hours < 100) {
+    return { value: hours, unit: "hours" };
+  }
+  return { value: Math.floor(hours / 24), unit: "days" };
 }
 
 function getStats(orderList: Order[]) {
@@ -30,16 +35,20 @@ function getStats(orderList: Order[]) {
 export default function Home() {
   const orderList = orders.orders as Order[];
   const latestOrder = orderList[0];
-  const daysSince = getDaysSince(latestOrder.date);
+  const timeSince = getTimeSince(latestOrder.date);
   const stats = getStats(orderList);
 
-  const getMessage = (days: number) => {
-    if (days === 0) return "you ordered today. no self control.";
-    if (days === 1) return "one day strong. barely.";
-    if (days < 3) return "still in the danger zone.";
-    if (days < 7) return "a whole week? impressive... for you.";
-    if (days < 14) return "who even are you anymore?";
-    if (days < 30) return "your wallet thanks you.";
+  const getMessage = (value: number, unit: "hours" | "days") => {
+    if (unit === "hours") {
+      if (value < 1) return "you literally just ordered. come on.";
+      if (value < 6) return "still digesting the regret.";
+      if (value < 24) return "not even a full day yet.";
+      if (value < 48) return "one day strong. barely.";
+      return "still in the danger zone.";
+    }
+    if (value < 7) return "a whole week? impressive... for you.";
+    if (value < 14) return "who even are you anymore?";
+    if (value < 30) return "your wallet thanks you.";
     return "are you okay? blink twice if you need help.";
   };
 
@@ -56,11 +65,11 @@ export default function Home() {
         </header>
 
         <section className="mb-16">
-          <div className="text-zinc-500 text-sm mb-2">days since doordash</div>
+          <div className="text-zinc-500 text-sm mb-2">{timeSince.unit} since doordash</div>
           <div className="text-[12rem] font-bold leading-none tracking-tighter text-white">
-            {daysSince}
+            {timeSince.value}
           </div>
-          <p className="text-zinc-400 text-lg mt-4">{getMessage(daysSince)}</p>
+          <p className="text-zinc-400 text-lg mt-4">{getMessage(timeSince.value, timeSince.unit)}</p>
           <p className="text-zinc-600 text-sm mt-2">
             last order: {latestOrder.restaurant} &middot; ${latestOrder.total.toFixed(2)}
           </p>
