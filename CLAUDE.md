@@ -8,15 +8,14 @@ Personal dashboard at `dashboard.slobo.xyz` - started with DoorDash "days since"
 - Future: Cloudflare D1 for database
 
 ## Current State
-- MVP complete and working locally (`npm run dev`)
+- Live at `dashboard.slobo.xyz` (deployed on Vercel, auto-deploys from GitHub)
 - 76 orders scraped from DoorDash (Jun-Dec 2025)
 - Data stored in `data/orders.json`
-- GitHub repo created and pushed (public)
+- Shows hours when < 100 hours since last order, days otherwise
 
 ## Remaining Tasks
-1. **Deploy to Vercel** - import GitHub repo at vercel.com/new, add domain `dashboard.slobo.xyz`
-2. **Cloudflare D1** (optional/later) - for dynamic data updates
-3. **Add more widgets** - other fun data to track
+1. **Cloudflare D1** (optional/later) - for dynamic data updates
+2. **Add more widgets** - other fun data to track
 
 ## Project Structure
 ```
