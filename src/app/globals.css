@@ -1,8 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #09090b;
+  --foreground: #fafafa;
+  --accent: #ef4444;
+  --accent-glow: rgba(239, 68, 68, 0.4);
+  --muted: #52525b;
 }
 
 @theme inline {
@@ -12,15 +16,110 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
 }
+
+/* Scanline overlay effect */
+.scanlines {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.15) 2px,
+    rgba(0, 0, 0, 0.15) 4px
+  );
+  z-index: 100;
+}
+
+/* Vignette effect */
+.vignette {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 0%, transparent 50%, rgba(0, 0, 0, 0.6) 100%);
+  z-index: 99;
+}
+
+/* Timer digit styling */
+.timer-digit {
+  font-family: 'Space Mono', monospace;
+  font-variant-numeric: tabular-nums;
+  text-shadow:
+    0 0 20px var(--accent-glow),
+    0 0 40px var(--accent-glow),
+    0 0 60px rgba(239, 68, 68, 0.2);
+}
+
+/* Pulsing colon */
+@keyframes pulse-colon {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.colon-pulse {
+  animation: pulse-colon 1s ease-in-out infinite;
+}
+
+/* Subtle breathing glow on the main counter */
+@keyframes breathe {
+  0%, 100% {
+    filter: brightness(1);
+    text-shadow:
+      0 0 20px var(--accent-glow),
+      0 0 40px var(--accent-glow),
+      0 0 60px rgba(239, 68, 68, 0.2);
+  }
+  50% {
+    filter: brightness(1.1);
+    text-shadow:
+      0 0 30px var(--accent-glow),
+      0 0 60px var(--accent-glow),
+      0 0 90px rgba(239, 68, 68, 0.3);
+  }
+}
+
+.breathe {
+  animation: breathe 4s ease-in-out infinite;
+}
+
+/* Message fade-in */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up {
+  animation: fade-up 0.6s ease-out;
+}
+
+/* Stats reveal */
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal {
+  animation: reveal 0.8s ease-out forwards;
+}
+
+.reveal-delay-1 { animation-delay: 0.1s; opacity: 0; }
+.reveal-delay-2 { animation-delay: 0.2s; opacity: 0; }
+.reveal-delay-3 { animation-delay: 0.3s; opacity: 0; }
