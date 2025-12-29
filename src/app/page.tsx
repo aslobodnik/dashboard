@@ -48,24 +48,35 @@ function getMessage(hours: number): string {
   return "legendary. or you forgot your password.";
 }
 
-function get30DayStats(orderList: Order[]) {
+function get30DayActivity(orderList: Order[]) {
   const now = new Date();
-  const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+  const days: { date: Date; count: number; dateStr: string }[] = [];
 
-  const recentOrders = orderList.filter((o) => {
-    const [year, month, day] = o.date.split("-").map(Number);
-    const orderDate = new Date(year, month - 1, day);
-    return orderDate >= thirtyDaysAgo;
+  // Build last 30 days
+  for (let i = 29; i >= 0; i--) {
+    const date = new Date(now.getTime() - i * 24 * 60 * 60 * 1000);
+    const dateStr = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+    days.push({ date, count: 0, dateStr });
+  }
+
+  // Count orders per day
+  orderList.forEach((o) => {
+    const day = days.find(d => d.dateStr === o.date);
+    if (day) day.count++;
   });
 
-  const totalSpent = recentOrders.reduce((sum, o) => sum + o.total, 0);
-  const orderCount = recentOrders.length;
+  const totalOrders = days.reduce((sum, d) => sum + d.count, 0);
+  const daysWithOrders = days.filter(d => d.count > 0).length;
+  const maxCount = Math.max(...days.map(d => d.count), 1);
 
-  return {
-    totalSpent,
-    orderCount,
-    avgPerOrder: orderCount > 0 ? totalSpent / orderCount : 0,
-  };
+  // Calculate current streak (days without ordering)
+  let streak = 0;
+  for (let i = days.length - 1; i >= 0; i--) {
+    if (days[i].count === 0) streak++;
+    else break;
+  }
+
+  return { days, totalOrders, daysWithOrders, maxCount, streak };
 }
 
 function getTopRestaurants(orderList: Order[]) {
@@ -81,7 +92,7 @@ function getTopRestaurants(orderList: Order[]) {
 export default function Home() {
   const orderList = orders.orders as Order[];
   const latestOrder = orderList[0];
-  const stats30d = get30DayStats(orderList);
+  const activity = get30DayActivity(orderList);
   const topRestaurants = getTopRestaurants(orderList);
 
   const [time, setTime] = useState(() => getTimeSince(latestOrder.date, latestOrder.time));
@@ -112,10 +123,21 @@ export default function Home() {
       <div className="scanlines opacity-30" />
 
       {/* Header */}
-      <header className="relative z-10 pt-8 pb-4 text-center">
-        <h1 className="text-[10px] sm:text-xs uppercase tracking-[0.4em] text-zinc-600 font-medium">
-          doordash recovery tracker
-        </h1>
+      <header className="relative z-10 pt-6 sm:pt-8 pb-4 text-center">
+        <div className="inline-flex flex-col items-center">
+          {/* Main title with better contrast */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            <span className="text-red-500/60 text-sm sm:text-base">◉</span>
+            <h1 className="text-[11px] sm:text-sm uppercase tracking-[0.3em] text-zinc-400 font-medium">
+              doordash recovery
+            </h1>
+            <span className="text-red-500/60 text-sm sm:text-base">◉</span>
+          </div>
+          {/* Whimsical tagline */}
+          <p className="text-[9px] sm:text-[10px] text-zinc-600 tracking-widest mt-1 italic">
+            one order at a time
+          </p>
+        </div>
       </header>
 
       {/* Main Timer Section */}
@@ -165,31 +187,56 @@ export default function Home() {
       {/* Stats Footer */}
       <footer className="relative z-10 pb-8 pt-4">
         <div className="max-w-xl mx-auto px-4">
-          {/* Stats row */}
-          <div className="grid grid-cols-3 gap-4 mb-6">
-            <div className="text-center reveal reveal-delay-1">
-              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-red-400">
-                ${stats30d.totalSpent.toFixed(0)}
-              </div>
-              <div className="text-zinc-600 text-[10px] sm:text-xs uppercase tracking-wider mt-1">
-                last 30 days
-              </div>
+          {/* Activity Grid - GitHub style */}
+          <div className="mb-6">
+            <div className="flex items-center justify-center gap-1 sm:gap-1.5 flex-wrap max-w-md mx-auto">
+              {activity.days.map((day, i) => {
+                const intensity = day.count === 0
+                  ? 'bg-zinc-900'
+                  : day.count === 1
+                    ? 'bg-red-900/60'
+                    : day.count === 2
+                      ? 'bg-red-700/70'
+                      : 'bg-red-500';
+                const isToday = i === activity.days.length - 1;
+                return (
+                  <div
+                    key={day.dateStr}
+                    className={`w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-sm ${intensity} ${isToday ? 'ring-1 ring-zinc-600' : ''}`}
+                    title={`${day.dateStr}: ${day.count} order${day.count !== 1 ? 's' : ''}`}
+                  />
+                );
+              })}
             </div>
-            <div className="text-center reveal reveal-delay-2">
-              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-zinc-300">
-                {stats30d.orderCount}
+            <div className="flex justify-center items-center gap-4 mt-3 text-[10px] sm:text-xs text-zinc-600">
+              <span>30 days ago</span>
+              <div className="flex items-center gap-1">
+                <span className="text-zinc-500">less</span>
+                <div className="w-2.5 h-2.5 rounded-sm bg-zinc-900" />
+                <div className="w-2.5 h-2.5 rounded-sm bg-red-900/60" />
+                <div className="w-2.5 h-2.5 rounded-sm bg-red-700/70" />
+                <div className="w-2.5 h-2.5 rounded-sm bg-red-500" />
+                <span className="text-zinc-500">more</span>
               </div>
-              <div className="text-zinc-600 text-[10px] sm:text-xs uppercase tracking-wider mt-1">
-                incidents
-              </div>
+              <span>today</span>
             </div>
-            <div className="text-center reveal reveal-delay-3">
-              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-zinc-300">
-                ${stats30d.avgPerOrder.toFixed(0)}
-              </div>
-              <div className="text-zinc-600 text-[10px] sm:text-xs uppercase tracking-wider mt-1">
-                per incident
-              </div>
+          </div>
+
+          {/* Stats row - simplified */}
+          <div className="flex justify-center items-center gap-6 sm:gap-10 mb-4">
+            <div className="text-center">
+              <span className="text-xl sm:text-2xl font-bold text-red-400">{activity.totalOrders}</span>
+              <span className="text-zinc-600 text-[10px] sm:text-xs uppercase tracking-wider ml-2">orders</span>
+            </div>
+            <div className="text-zinc-700">·</div>
+            <div className="text-center">
+              <span className="text-xl sm:text-2xl font-bold text-zinc-300">{activity.daysWithOrders}</span>
+              <span className="text-zinc-600 text-[10px] sm:text-xs uppercase tracking-wider ml-2">days</span>
+            </div>
+            <div className="text-zinc-700">·</div>
+            <div className="text-center">
+              <span className="text-xl sm:text-2xl font-bold text-emerald-400">{30 - activity.daysWithOrders}</span>
+              <span className="text-zinc-600 text-[10px] sm:text-xs uppercase tracking-wider ml-2">clean</span>
             </div>
           </div>
 
