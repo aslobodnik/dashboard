@@ -28,17 +28,34 @@ npm run dev          # start dev server
 npm run build        # build for production
 ```
 
-## Next Steps
+## Data Ingestion
 
-### 1. Better Data Ingestion (Priority)
-Current method (scraping DoorDash) is tedious. Explore alternatives:
-- **DoorDash data export** - check if they offer CSV/JSON export in account settings
-- **Gmail integration** - DoorDash sends order confirmation emails; could parse these
-  - Gmail API to fetch emails from DoorDash
-  - Extract order details (restaurant, total, timestamp) from email body
-- **DoorDash API** - unlikely to be public, but worth checking
+### GraphQL API Method (Recommended)
+DoorDash uses a GraphQL API we can query directly while logged in:
 
-### 2. Future Enhancements
+```
+/scripts/fetch-doordash-orders.js
+```
+
+**To fetch new orders:**
+1. Open doordash.com in browser and ensure logged in
+2. Open browser console (or use Claude's `javascript_tool`)
+3. Paste/run the script from `scripts/fetch-doordash-orders.js`
+4. Copy the JSON output to `data/orders.json`
+
+**Endpoint:** `https://www.doordash.com/graphql/getConsumerOrdersWithDetails`
+
+The script:
+- Uses session cookies for auth (no credentials needed)
+- Paginates through all orders automatically
+- Transforms to our `orders.json` format
+- Sorts newest first
+
+### Alternative Methods
+- **Gmail integration** - parse order confirmation emails via Gmail API
+- **DoorDash data export** - check account settings for CSV/JSON export
+
+## Future Enhancements
 - Cloudflare D1 for persistent storage
 - Auto-refresh data via scheduled function
 - Add more widgets (other fun data to track)
