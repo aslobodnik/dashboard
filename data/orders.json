@@ -1,6 +1,7 @@
 {
-  "lastUpdated": "2025-12-28",
+  "lastUpdated": "2025-12-29",
   "orders": [
+    {"date": "2025-12-29", "time": "18:45", "restaurant": "Forma Pasta Factory", "total": 41.00, "items": 3, "type": "delivery"},
     {"date": "2025-12-28", "time": "19:51", "restaurant": "Harlem Shake", "total": 29.57, "items": 3, "type": "delivery"},
     {"date": "2025-12-28", "time": "12:46", "restaurant": "McDonald's", "total": 24.40, "items": 9, "type": "delivery"},
     {"date": "2025-12-27", "time": "18:04", "restaurant": "Petee's Pie Co.", "total": 26.78, "items": 2, "type": "delivery"},

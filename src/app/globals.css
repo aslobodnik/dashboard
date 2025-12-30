@@ -34,7 +34,7 @@ body {
     rgba(0, 0, 0, 0.15) 2px,
     rgba(0, 0, 0, 0.15) 4px
   );
-  z-index: 100;
+  z-index: 50;
 }
 
 /* Vignette effect */
@@ -43,7 +43,7 @@ body {
   inset: 0;
   pointer-events: none;
   background: radial-gradient(ellipse at center, transparent 0%, transparent 50%, rgba(0, 0, 0, 0.6) 100%);
-  z-index: 99;
+  z-index: 49;
 }
 
 /* Timer digit styling */
@@ -123,3 +123,26 @@ body {
 .reveal-delay-1 { animation-delay: 0.1s; opacity: 0; }
 .reveal-delay-2 { animation-delay: 0.2s; opacity: 0; }
 .reveal-delay-3 { animation-delay: 0.3s; opacity: 0; }
+
+/* Activity grid cell glow effects */
+.activity-cell-glow-1 {
+  box-shadow: 0 0 4px rgba(127, 29, 29, 0.4);
+}
+
+.activity-cell-glow-2 {
+  box-shadow: 0 0 6px rgba(185, 28, 28, 0.5);
+}
+
+.activity-cell-glow-3 {
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.5);
+  animation: cell-pulse 3s ease-in-out infinite;
+}
+
+@keyframes cell-pulse {
+  0%, 100% {
+    box-shadow: 0 0 8px rgba(239, 68, 68, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 12px rgba(239, 68, 68, 0.7);
+  }
+}

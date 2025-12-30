@@ -48,15 +48,26 @@ function getMessage(hours: number): string {
   return "legendary. or you forgot your password.";
 }
 
-function get30DayActivity(orderList: Order[]) {
+function getAllTimeActivity(orderList: Order[]) {
   const now = new Date();
-  const days: { date: Date; count: number; dateStr: string }[] = [];
+  now.setHours(23, 59, 59, 999);
 
-  // Build last 30 days
-  for (let i = 29; i >= 0; i--) {
-    const date = new Date(now.getTime() - i * 24 * 60 * 60 * 1000);
-    const dateStr = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
-    days.push({ date, count: 0, dateStr });
+  // Find the earliest order date
+  const sortedOrders = [...orderList].sort((a, b) => a.date.localeCompare(b.date));
+  const earliestOrderDate = sortedOrders[0]?.date || new Date().toISOString().split('T')[0];
+
+  // Parse earliest date
+  const [startYear, startMonth, startDay] = earliestOrderDate.split("-").map(Number);
+  const startDate = new Date(startYear, startMonth - 1, startDay);
+
+  // Build all days from start to now
+  const days: { date: Date; count: number; dateStr: string }[] = [];
+  const currentDate = new Date(startDate);
+
+  while (currentDate <= now) {
+    const dateStr = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
+    days.push({ date: new Date(currentDate), count: 0, dateStr });
+    currentDate.setDate(currentDate.getDate() + 1);
   }
 
   // Count orders per day
@@ -67,7 +78,12 @@ function get30DayActivity(orderList: Order[]) {
 
   const totalOrders = days.reduce((sum, d) => sum + d.count, 0);
   const daysWithOrders = days.filter(d => d.count > 0).length;
-  const maxCount = Math.max(...days.map(d => d.count), 1);
+  const totalDays = days.length;
+  const cleanDays = totalDays - daysWithOrders;
+  const successRate = Math.round((cleanDays / totalDays) * 100);
+
+  // Calculate total spend
+  const totalSpend = orderList.reduce((sum, o) => sum + o.total, 0);
 
   // Calculate current streak (days without ordering)
   let streak = 0;
@@ -76,7 +92,7 @@ function get30DayActivity(orderList: Order[]) {
     else break;
   }
 
-  return { days, totalOrders, daysWithOrders, maxCount, streak };
+  return { days, totalOrders, daysWithOrders, totalDays, cleanDays, successRate, totalSpend, streak };
 }
 
 function getTopRestaurants(orderList: Order[]) {
@@ -92,7 +108,7 @@ function getTopRestaurants(orderList: Order[]) {
 export default function Home() {
   const orderList = orders.orders as Order[];
   const latestOrder = orderList[0];
-  const activity = get30DayActivity(orderList);
+  const activity = getAllTimeActivity(orderList);
   const topRestaurants = getTopRestaurants(orderList);
 
   const [time, setTime] = useState(() => getTimeSince(latestOrder.date, latestOrder.time));
@@ -154,7 +170,7 @@ export default function Home() {
 
         {/* Giant HH:MM:SS Counter */}
         <div className="timer-digit breathe text-center">
-          <div className="text-[4rem] sm:text-[8rem] md:text-[12rem] lg:text-[16rem] font-bold leading-none tracking-tight flex items-center justify-center">
+          <div className="text-[3.5rem] sm:text-[6rem] md:text-[8rem] lg:text-[10rem] font-bold leading-none tracking-tight flex items-center justify-center">
             <span className="text-white">{pad(time.hours % 24)}</span>
             <span className="text-red-500 colon-pulse mx-1 sm:mx-2">:</span>
             <span className="text-white">{pad(time.minutes)}</span>
@@ -186,67 +202,236 @@ export default function Home() {
 
       {/* Stats Footer */}
       <footer className="relative z-10 pb-8 pt-4">
-        <div className="max-w-xl mx-auto px-4">
-          {/* Activity Grid - GitHub style */}
-          <div className="mb-6">
-            <div className="flex items-center justify-center gap-1 sm:gap-1.5 flex-wrap max-w-md mx-auto">
-              {activity.days.map((day, i) => {
-                const intensity = day.count === 0
-                  ? 'bg-zinc-900'
-                  : day.count === 1
-                    ? 'bg-red-900/60'
-                    : day.count === 2
-                      ? 'bg-red-700/70'
-                      : 'bg-red-500';
-                const isToday = i === activity.days.length - 1;
-                return (
-                  <div
-                    key={day.dateStr}
-                    className={`w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-sm ${intensity} ${isToday ? 'ring-1 ring-zinc-600' : ''}`}
-                    title={`${day.dateStr}: ${day.count} order${day.count !== 1 ? 's' : ''}`}
-                  />
-                );
-              })}
+        <div className="max-w-3xl mx-auto px-4">
+
+          {/* Primary stat - Success Rate */}
+          <div className="text-center mb-6">
+            <div className="inline-flex items-baseline gap-1">
+              <span className={`text-4xl sm:text-5xl font-bold font-mono ${activity.successRate >= 70 ? 'text-emerald-400' : activity.successRate >= 50 ? 'text-yellow-400' : 'text-red-400'}`}>
+                {activity.successRate}%
+              </span>
+              <span className="text-zinc-600 text-sm uppercase tracking-wider">success rate</span>
             </div>
-            <div className="flex justify-center items-center gap-4 mt-3 text-[10px] sm:text-xs text-zinc-600">
-              <span>30 days ago</span>
-              <div className="flex items-center gap-1">
-                <span className="text-zinc-500">less</span>
-                <div className="w-2.5 h-2.5 rounded-sm bg-zinc-900" />
-                <div className="w-2.5 h-2.5 rounded-sm bg-red-900/60" />
-                <div className="w-2.5 h-2.5 rounded-sm bg-red-700/70" />
-                <div className="w-2.5 h-2.5 rounded-sm bg-red-500" />
-                <span className="text-zinc-500">more</span>
-              </div>
-              <span>today</span>
+            <div className="text-[10px] text-zinc-600 mt-1">
+              {activity.cleanDays} of {activity.totalDays} days without ordering
             </div>
           </div>
 
-          {/* Stats row - simplified */}
-          <div className="flex justify-center items-center gap-6 sm:gap-10 mb-4">
-            <div className="text-center">
-              <span className="text-xl sm:text-2xl font-bold text-red-400">{activity.totalOrders}</span>
-              <span className="text-zinc-600 text-[10px] sm:text-xs uppercase tracking-wider ml-2">orders</span>
+          {/* Activity Grid - Full history */}
+          <div className="mb-6">
+            {/* Section header with date range */}
+            <div className="flex items-center justify-center gap-3 mb-3">
+              <div className="h-px w-12 bg-gradient-to-r from-transparent to-zinc-700" />
+              <span className="text-[9px] uppercase tracking-[0.2em] text-zinc-600 font-mono">
+                {activity.days[0]?.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                {' — '}
+                {activity.days[activity.days.length - 1]?.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+              </span>
+              <div className="h-px w-12 bg-gradient-to-l from-transparent to-zinc-700" />
             </div>
-            <div className="text-zinc-700">·</div>
-            <div className="text-center">
-              <span className="text-xl sm:text-2xl font-bold text-zinc-300">{activity.daysWithOrders}</span>
-              <span className="text-zinc-600 text-[10px] sm:text-xs uppercase tracking-wider ml-2">days</span>
+
+            {/* Grid container */}
+            <div className="flex justify-center pb-2">
+              <div className="inline-flex gap-3 relative">
+                {/* Day labels */}
+                <div className="flex flex-col gap-[3px] pt-4">
+                  {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((d, i) => (
+                    <div key={i} className="h-[11px] sm:h-[13px] flex items-center">
+                      <span className="text-[8px] text-zinc-600 w-3 text-right font-mono">{d}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Weekly columns */}
+                <div className="relative">
+                  {/* Month labels */}
+                  <div className="flex gap-[2px] mb-1 h-3">
+                    {(() => {
+                      const monthLabels: { month: string; colSpan: number; weekIndex: number }[] = [];
+                      let currentMonth = -1;
+                      let weekCount = 0;
+
+                      // Calculate weeks
+                      const weeks: typeof activity.days[] = [];
+                      const firstDayOfWeek = activity.days[0]?.date.getDay() || 0;
+                      let currentWeek: typeof activity.days = [];
+                      for (let i = 0; i < firstDayOfWeek; i++) {
+                        currentWeek.push({ date: new Date(), count: -1, dateStr: `empty-${i}` });
+                      }
+                      activity.days.forEach((day) => {
+                        currentWeek.push(day);
+                        if (currentWeek.length === 7) {
+                          weeks.push(currentWeek);
+                          currentWeek = [];
+                        }
+                      });
+                      if (currentWeek.length > 0) {
+                        while (currentWeek.length < 7) {
+                          currentWeek.push({ date: new Date(), count: -1, dateStr: `empty-end-${currentWeek.length}` });
+                        }
+                        weeks.push(currentWeek);
+                      }
+
+                      weeks.forEach((week, i) => {
+                        const firstRealDay = week.find(d => d.count !== -1);
+                        if (firstRealDay) {
+                          const month = firstRealDay.date.getMonth();
+                          if (month !== currentMonth) {
+                            if (currentMonth !== -1) {
+                              monthLabels[monthLabels.length - 1].colSpan = weekCount;
+                            }
+                            monthLabels.push({
+                              month: firstRealDay.date.toLocaleDateString('en-US', { month: 'short' }),
+                              colSpan: 0,
+                              weekIndex: i
+                            });
+                            currentMonth = month;
+                            weekCount = 1;
+                          } else {
+                            weekCount++;
+                          }
+                        }
+                      });
+                      if (monthLabels.length > 0) {
+                        monthLabels[monthLabels.length - 1].colSpan = weekCount;
+                      }
+
+                      return (
+                        <div className="flex">
+                          {monthLabels.map((m, i) => (
+                            <div
+                              key={i}
+                              className="text-[8px] text-zinc-600 font-mono"
+                              style={{ width: `${m.colSpan * 13 + (m.colSpan - 1) * 2}px` }}
+                            >
+                              {m.month}
+                            </div>
+                          ))}
+                        </div>
+                      );
+                    })()}
+                  </div>
+
+                  {/* Grid cells organized by week */}
+                  <div className="flex gap-[2px]">
+                    {(() => {
+                      // Organize into weeks (columns)
+                      const weeks: typeof activity.days[] = [];
+                      const firstDayOfWeek = activity.days[0]?.date.getDay() || 0;
+
+                      // Pad the first week with empty cells
+                      let currentWeek: typeof activity.days = [];
+                      for (let i = 0; i < firstDayOfWeek; i++) {
+                        currentWeek.push({ date: new Date(), count: -1, dateStr: `empty-${i}` });
+                      }
+
+                      activity.days.forEach((day) => {
+                        currentWeek.push(day);
+                        if (currentWeek.length === 7) {
+                          weeks.push(currentWeek);
+                          currentWeek = [];
+                        }
+                      });
+
+                      // Push remaining days
+                      if (currentWeek.length > 0) {
+                        while (currentWeek.length < 7) {
+                          currentWeek.push({ date: new Date(), count: -1, dateStr: `empty-end-${currentWeek.length}` });
+                        }
+                        weeks.push(currentWeek);
+                      }
+
+                      return weeks.map((week, weekIndex) => (
+                        <div key={weekIndex} className="flex flex-col gap-[2px]">
+                          {week.map((day) => {
+                            if (day.count === -1) {
+                              return <div key={day.dateStr} className="w-[11px] h-[11px] sm:w-[13px] sm:h-[13px]" />;
+                            }
+                            const isToday = day.dateStr === activity.days[activity.days.length - 1]?.dateStr;
+                            const hasOrders = day.count > 0;
+                            return (
+                              <div key={day.dateStr} className="group relative hover:z-[90]">
+                                <div
+                                  className={`
+                                    w-[11px] h-[11px] sm:w-[13px] sm:h-[13px] rounded-[2px] transition-all duration-200
+                                    ${day.count === 0
+                                      ? 'bg-emerald-900/30 border border-emerald-900/40'
+                                      : day.count === 1
+                                        ? 'bg-red-900/50 border border-red-900/60 activity-cell-glow-1'
+                                        : day.count === 2
+                                          ? 'bg-red-700/60 border border-red-700/50 activity-cell-glow-2'
+                                          : 'bg-red-500/80 border border-red-500/60 activity-cell-glow-3'
+                                    }
+                                    ${isToday ? 'ring-1 ring-zinc-400 ring-offset-1 ring-offset-[#09090b]' : ''}
+                                    group-hover:scale-150 group-hover:z-10
+                                    ${hasOrders ? 'group-hover:shadow-[0_0_12px_rgba(239,68,68,0.5)]' : 'group-hover:shadow-[0_0_8px_rgba(16,185,129,0.3)]'}
+                                  `}
+                                />
+                                {/* Tooltip */}
+                                <div className="
+                                  absolute bottom-full left-1/2 -translate-x-1/2 mb-2
+                                  opacity-0 group-hover:opacity-100 transition-opacity duration-150
+                                  pointer-events-none z-[100]
+                                ">
+                                  <div className="bg-zinc-900 border border-zinc-700 rounded px-2 py-1.5 shadow-xl whitespace-nowrap">
+                                    <div className="text-[10px] text-zinc-400 font-mono">
+                                      {new Date(day.dateStr + 'T12:00:00').toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
+                                    </div>
+                                    <div className={`text-[11px] font-medium ${day.count > 0 ? 'text-red-400' : 'text-emerald-400'}`}>
+                                      {day.count === 0 ? '✓ No orders' : `${day.count} order${day.count > 1 ? 's' : ''}`}
+                                    </div>
+                                  </div>
+                                  <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-px border-4 border-transparent border-t-zinc-700" />
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      ));
+                    })()}
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="text-zinc-700">·</div>
-            <div className="text-center">
-              <span className="text-xl sm:text-2xl font-bold text-emerald-400">{30 - activity.daysWithOrders}</span>
-              <span className="text-zinc-600 text-[10px] sm:text-xs uppercase tracking-wider ml-2">clean</span>
+
+            {/* Legend */}
+            <div className="flex justify-center items-center gap-4 mt-3">
+              <div className="flex items-center gap-1.5">
+                <div className="w-[10px] h-[10px] rounded-[2px] bg-emerald-900/30 border border-emerald-900/40" />
+                <span className="text-[9px] text-zinc-500">no orders</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <div className="w-[10px] h-[10px] rounded-[2px] bg-red-900/50 border border-red-900/60" />
+                <div className="w-[10px] h-[10px] rounded-[2px] bg-red-700/60 border border-red-700/50" />
+                <div className="w-[10px] h-[10px] rounded-[2px] bg-red-500/80 border border-red-500/60" />
+                <span className="text-[9px] text-zinc-500 ml-0.5">1 → 3+ orders</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Secondary stats */}
+          <div className="flex justify-center items-stretch gap-2 sm:gap-3 mb-5">
+            <div className="bg-zinc-900/40 border border-zinc-800/60 rounded-lg px-3 sm:px-4 py-2 text-center">
+              <div className="text-lg sm:text-xl font-bold text-red-400 font-mono">${activity.totalSpend.toFixed(0)}</div>
+              <div className="text-[8px] sm:text-[9px] text-zinc-600 uppercase tracking-wider">total damage</div>
+            </div>
+            <div className="bg-zinc-900/40 border border-zinc-800/60 rounded-lg px-3 sm:px-4 py-2 text-center">
+              <div className="text-lg sm:text-xl font-bold text-zinc-400 font-mono">{activity.totalOrders}</div>
+              <div className="text-[8px] sm:text-[9px] text-zinc-600 uppercase tracking-wider">orders</div>
+            </div>
+            <div className="bg-zinc-900/40 border border-zinc-800/60 rounded-lg px-3 sm:px-4 py-2 text-center">
+              <div className="text-lg sm:text-xl font-bold text-zinc-500 font-mono">{activity.totalDays}</div>
+              <div className="text-[8px] sm:text-[9px] text-zinc-600 uppercase tracking-wider">days tracked</div>
             </div>
           </div>
 
           {/* Top enablers */}
           <div className="text-center">
-            <span className="text-zinc-700 text-[10px] sm:text-xs uppercase tracking-wider">
-              top enablers:{" "}
+            <span className="text-[9px] text-zinc-700 uppercase tracking-wider">
+              most ordered from:{" "}
             </span>
-            <span className="text-zinc-500 text-[10px] sm:text-xs">
-              {topRestaurants.map(([name]) => name).join(" · ")}
+            <span className="text-[10px] text-zinc-500 font-mono">
+              {topRestaurants.map(([name, count]) => `${name} (${count})`).join(" · ")}
             </span>
           </div>
         </div>
