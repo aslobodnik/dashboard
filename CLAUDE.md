@@ -55,6 +55,51 @@ The script:
 - **Gmail integration** - parse order confirmation emails via Gmail API
 - **DoorDash data export** - check account settings for CSV/JSON export
 
+## Next Session: Test GraphQL Fetch (Incremental)
+
+Don't run full script blindly. Test step by step:
+
+### Step 1: Auth check
+```js
+// Just see if we can hit the endpoint at all
+fetch('https://www.doordash.com/graphql/getConsumerOrdersWithDetails?operation=getConsumerOrdersWithDetails', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  credentials: 'include',
+  body: JSON.stringify({
+    operationName: 'getConsumerOrdersWithDetails',
+    variables: { offset: 0, limit: 1, includeCancelled: false },
+    query: 'query getConsumerOrdersWithDetails($offset: Int!, $limit: Int!) { getConsumerOrdersWithDetails(offset: $offset, limit: $limit) { id store { name } } }'
+  })
+}).then(r => r.json()).then(console.log)
+```
+**Expected**: JSON response with 1 order, or auth error
+
+### Step 2: Inspect response structure
+- Fetch 1 order with full query from script
+- Log raw response, check field names match what we expect
+- Verify: `submittedAt`, `store.name`, `grandTotal.unitAmount`, `orders[].items`
+
+### Step 3: Validate against known data
+- Fetch latest order via API
+- Compare to our most recent entry (Forma Pasta Factory, Dec 29, $41.00)
+- Do the values match exactly?
+
+### Step 4: Test pagination
+- Fetch with `limit: 5, offset: 0`
+- Then `limit: 5, offset: 5`
+- Verify no duplicates, correct order
+
+### Step 5: Full fetch & diff
+- Run full script
+- Compare output count to our current orders.json (22 orders)
+- Should have >= 22 orders
+- Spot check a few random entries
+
+### Step 6: Only then replace
+- If all checks pass, copy new JSON to orders.json
+- Verify dashboard still works
+
 ## Future Enhancements
 - Cloudflare D1 for persistent storage
 - Auto-refresh data via scheduled function
