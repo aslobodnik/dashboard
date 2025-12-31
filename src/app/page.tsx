@@ -158,33 +158,47 @@ export default function Home() {
 
       {/* Main Timer Section */}
       <main className="relative z-10 flex-1 flex flex-col items-center justify-center px-4 -mt-16">
-        {/* Days counter if applicable */}
-        {time.days > 0 && (
-          <div className="mb-4 fade-up">
-            <span className="text-6xl sm:text-8xl font-bold text-white timer-digit">{time.days}</span>
-            <span className="text-zinc-500 text-lg sm:text-xl uppercase tracking-widest ml-3">
-              {time.days === 1 ? "day" : "days"}
-            </span>
-          </div>
+        {time.days >= 1 ? (
+          /* 1+ days: Days hero with subordinate ticking clock */
+          <>
+            <div className="text-center fade-up mt-8">
+              <div className="timer-digit breathe inline-flex items-baseline">
+                <span className="text-[5rem] sm:text-[7rem] md:text-[8rem] font-bold text-white leading-none">{time.days}</span>
+                <span className="text-zinc-500 text-xl sm:text-2xl md:text-3xl uppercase tracking-[0.2em] ml-3 sm:ml-4 font-medium">
+                  {time.days === 1 ? "day" : "days"}
+                </span>
+              </div>
+            </div>
+            {/* Subordinate ticking clock - still alive */}
+            <div className="mt-4 sm:mt-6 text-center">
+              <div className="inline-flex items-center text-2xl sm:text-3xl md:text-4xl font-bold text-zinc-500 tracking-tight font-mono">
+                <span>{pad(time.hours % 24)}</span>
+                <span className="text-red-500/50 colon-pulse mx-1">:</span>
+                <span>{pad(time.minutes)}</span>
+                <span className="text-red-500/50 colon-pulse mx-1">:</span>
+                <span>{pad(time.seconds)}</span>
+              </div>
+            </div>
+          </>
+        ) : (
+          /* Under 24 hours: Full dramatic HH:MM:SS */
+          <>
+            <div className="timer-digit breathe text-center">
+              <div className="text-[3.5rem] sm:text-[6rem] md:text-[8rem] lg:text-[10rem] font-bold leading-none tracking-tight flex items-center justify-center">
+                <span className="text-white">{pad(time.hours % 24)}</span>
+                <span className="text-red-500 colon-pulse mx-1 sm:mx-2">:</span>
+                <span className="text-white">{pad(time.minutes)}</span>
+                <span className="text-red-500 colon-pulse mx-1 sm:mx-2">:</span>
+                <span className="text-white">{pad(time.seconds)}</span>
+              </div>
+            </div>
+            <div className="flex justify-center gap-8 sm:gap-16 md:gap-24 text-zinc-600 text-[10px] sm:text-xs uppercase tracking-[0.3em] mt-2 sm:mt-4">
+              <span className="w-16 sm:w-24 text-center">hours</span>
+              <span className="w-16 sm:w-24 text-center">minutes</span>
+              <span className="w-16 sm:w-24 text-center">seconds</span>
+            </div>
+          </>
         )}
-
-        {/* Giant HH:MM:SS Counter */}
-        <div className="timer-digit breathe text-center">
-          <div className="text-[3.5rem] sm:text-[6rem] md:text-[8rem] lg:text-[10rem] font-bold leading-none tracking-tight flex items-center justify-center">
-            <span className="text-white">{pad(time.hours % 24)}</span>
-            <span className="text-red-500 colon-pulse mx-1 sm:mx-2">:</span>
-            <span className="text-white">{pad(time.minutes)}</span>
-            <span className="text-red-500 colon-pulse mx-1 sm:mx-2">:</span>
-            <span className="text-white">{pad(time.seconds)}</span>
-          </div>
-        </div>
-
-        {/* Labels */}
-        <div className="flex justify-center gap-8 sm:gap-16 md:gap-24 text-zinc-600 text-[10px] sm:text-xs uppercase tracking-[0.3em] mt-2 sm:mt-4">
-          <span className="w-16 sm:w-24 text-center">hours</span>
-          <span className="w-16 sm:w-24 text-center">minutes</span>
-          <span className="w-16 sm:w-24 text-center">seconds</span>
-        </div>
 
         {/* Whimsical message */}
         <p className="text-zinc-400 text-base sm:text-xl md:text-2xl mt-8 sm:mt-12 italic text-center max-w-lg fade-up">
