@@ -41,9 +41,9 @@ function getMessage(hours: number): string {
   if (hours < 12) return "the shame is still fresh.";
   if (hours < 24) return "not even a full day yet.";
   if (hours < 48) return "one day strong. barely.";
-  if (hours < 72) return "48 hours. your wallet is cautiously optimistic.";
+  if (hours < 72) return "48 hours. your metabolism is cautiously optimistic.";
   if (hours < 168) return "almost a week? who even are you?";
-  if (hours < 336) return "two weeks. your bank account weeps with joy.";
+  if (hours < 336) return "two weeks. your jeans might actually fit now.";
   if (hours < 720) return "a month? are you okay? blink twice if you need help.";
   return "legendary. or you forgot your password.";
 }
@@ -82,9 +82,6 @@ function getAllTimeActivity(orderList: Order[]) {
   const cleanDays = totalDays - daysWithOrders;
   const successRate = Math.round((cleanDays / totalDays) * 100);
 
-  // Calculate total spend
-  const totalSpend = orderList.reduce((sum, o) => sum + o.total, 0);
-
   // Calculate current streak (days without ordering)
   let streak = 0;
   for (let i = days.length - 1; i >= 0; i--) {
@@ -92,7 +89,7 @@ function getAllTimeActivity(orderList: Order[]) {
     else break;
   }
 
-  return { days, totalOrders, daysWithOrders, totalDays, cleanDays, successRate, totalSpend, streak };
+  return { days, totalOrders, daysWithOrders, totalDays, cleanDays, successRate, streak };
 }
 
 function getTopRestaurants(orderList: Order[]) {
@@ -425,10 +422,6 @@ export default function Home() {
 
           {/* Secondary stats */}
           <div className="flex justify-center items-stretch gap-2 sm:gap-3 mb-5">
-            <div className="bg-zinc-900/40 border border-zinc-800/60 rounded-lg px-3 sm:px-4 py-2 text-center">
-              <div className="text-lg sm:text-xl font-bold text-red-400 font-mono">${activity.totalSpend.toFixed(0)}</div>
-              <div className="text-[8px] sm:text-[9px] text-zinc-600 uppercase tracking-wider">total damage</div>
-            </div>
             <div className="bg-zinc-900/40 border border-zinc-800/60 rounded-lg px-3 sm:px-4 py-2 text-center">
               <div className="text-lg sm:text-xl font-bold text-zinc-400 font-mono">{activity.totalOrders}</div>
               <div className="text-[8px] sm:text-[9px] text-zinc-600 uppercase tracking-wider">orders</div>

@@ -1,6 +1,6 @@
 # Dashboard Project
 
-Personal dashboard at `dashboard.slobo.xyz` - DoorDash "recovery tracker" with tongue-in-cheek sobriety counter vibes.
+Personal dashboard at `dashboard.slobo.xyz` - DoorDash "recovery tracker" with tongue-in-cheek sobriety counter vibes. The framing is **health/weight loss** focused (not saving money). Whimsical messages should reference metabolism, jeans fitting, health benefits - not wallets or bank accounts.
 
 ## Tech Stack
 - Next.js 16 (App Router) + TypeScript + Tailwind
