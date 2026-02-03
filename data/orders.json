@@ -1,27 +1,2413 @@
 {
-  "lastUpdated": "2025-12-29",
+  "lastUpdated": "2026-02-03",
   "orders": [
-    {"date": "2025-12-29", "time": "18:45", "restaurant": "Forma Pasta Factory", "total": 41.00, "items": 3, "type": "delivery"},
-    {"date": "2025-12-28", "time": "19:51", "restaurant": "Harlem Shake", "total": 29.57, "items": 3, "type": "delivery"},
-    {"date": "2025-12-28", "time": "12:46", "restaurant": "McDonald's", "total": 24.40, "items": 9, "type": "delivery"},
-    {"date": "2025-12-27", "time": "18:04", "restaurant": "Petee's Pie Co.", "total": 26.78, "items": 2, "type": "delivery"},
-    {"date": "2025-12-24", "time": "13:12", "restaurant": "COMPTON'S", "total": 24.50, "items": 2, "type": "pickup"},
-    {"date": "2025-12-22", "time": "18:15", "restaurant": "Mirakuya Japanese Cuisine", "total": 115.87, "items": 3, "type": "delivery"},
-    {"date": "2025-12-11", "time": "17:42", "restaurant": "Mirakuya Japanese Cuisine", "total": 106.88, "items": 2, "type": "delivery"},
-    {"date": "2025-11-30", "time": "12:00", "restaurant": "McDonald's", "total": 19.75, "items": 9, "type": "delivery"},
-    {"date": "2025-11-29", "time": "12:00", "restaurant": "McDonald's", "total": 13.55, "items": 7, "type": "delivery"},
-    {"date": "2025-11-23", "time": "12:00", "restaurant": "Jimmy John's", "total": 30.33, "items": 5, "type": "delivery"},
-    {"date": "2025-11-22", "time": "12:00", "restaurant": "Pokeworks", "total": 32.72, "items": 3, "type": "delivery"},
-    {"date": "2025-11-19", "time": "12:00", "restaurant": "Sweetgreen", "total": 23.86, "items": 2, "type": "delivery"},
-    {"date": "2025-11-18", "time": "18:00", "restaurant": "The Chocolate Room", "total": 23.58, "items": 2, "type": "delivery"},
-    {"date": "2025-11-18", "time": "12:00", "restaurant": "McDonald's", "total": 13.30, "items": 8, "type": "delivery"},
-    {"date": "2025-11-16", "time": "12:00", "restaurant": "McDonald's", "total": 13.66, "items": 7, "type": "delivery"},
-    {"date": "2025-11-13", "time": "12:00", "restaurant": "Jimmy John's", "total": 27.05, "items": 3, "type": "delivery"},
-    {"date": "2025-11-12", "time": "18:00", "restaurant": "Ramen Spot", "total": 35.44, "items": 2, "type": "delivery"},
-    {"date": "2025-11-12", "time": "12:00", "restaurant": "McDonald's", "total": 13.30, "items": 6, "type": "delivery"},
-    {"date": "2025-11-09", "time": "12:00", "restaurant": "McDonald's", "total": 23.76, "items": 9, "type": "delivery"},
-    {"date": "2025-11-06", "time": "18:00", "restaurant": "Martha's Country Bakery", "total": 20.86, "items": 2, "type": "delivery"},
-    {"date": "2025-11-06", "time": "12:00", "restaurant": "McDonald's", "total": 18.84, "items": 8, "type": "delivery"},
-    {"date": "2025-11-04", "time": "12:00", "restaurant": "Jimmy John's", "total": 29.99, "items": 5, "type": "delivery"}
+    {
+      "date": "2026-02-02",
+      "time": "21:17",
+      "restaurant": "Martha's Country Bakery",
+      "total": 17.21,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2026-02-02",
+      "time": "20:32",
+      "restaurant": "McDonald's",
+      "total": 17.16,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2026-02-02",
+      "time": "11:59",
+      "restaurant": "Taim Mediterranean Kitchen",
+      "total": 122.96,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2026-01-27",
+      "time": "14:19",
+      "restaurant": "Chipotle Mexican Grill",
+      "total": 29.73,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2026-01-20",
+      "time": "12:16",
+      "restaurant": "Sweetgreen",
+      "total": 37.31,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2026-01-18",
+      "time": "16:20",
+      "restaurant": "McDonald's",
+      "total": 24.2,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2026-01-12",
+      "time": "11:29",
+      "restaurant": "DIG INN",
+      "total": 87.09,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-12-29",
+      "time": "18:45",
+      "restaurant": "Forma Pasta Factory",
+      "total": 41,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-12-28",
+      "time": "18:46",
+      "restaurant": "Harlem Shake",
+      "total": 29.57,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-12-28",
+      "time": "12:32",
+      "restaurant": "McDonald's",
+      "total": 24.4,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-12-27",
+      "time": "17:18",
+      "restaurant": "Petee's Pie Co.",
+      "total": 26.78,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-12-24",
+      "time": "12:50",
+      "restaurant": "COMPTON'S",
+      "total": 24.5,
+      "items": 0,
+      "type": "pickup"
+    },
+    {
+      "date": "2025-12-22",
+      "time": "17:13",
+      "restaurant": "Mirakuya Japanese Cuisine",
+      "total": 115.87,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-12-11",
+      "time": "16:52",
+      "restaurant": "Mirakuya Japanese Cuisine",
+      "total": 106.88,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-11-30",
+      "time": "18:16",
+      "restaurant": "McDonald's",
+      "total": 19.75,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-11-29",
+      "time": "17:24",
+      "restaurant": "McDonald's",
+      "total": 13.55,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-11-23",
+      "time": "13:00",
+      "restaurant": "Jimmy John's",
+      "total": 30.33,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-11-22",
+      "time": "13:02",
+      "restaurant": "Pokeworks",
+      "total": 32.72,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-11-19",
+      "time": "12:08",
+      "restaurant": "Sweetgreen",
+      "total": 23.86,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-11-18",
+      "time": "18:27",
+      "restaurant": "The Chocolate Room",
+      "total": 23.58,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-11-18",
+      "time": "17:48",
+      "restaurant": "McDonald's",
+      "total": 13.3,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-11-16",
+      "time": "18:41",
+      "restaurant": "McDonald's",
+      "total": 13.66,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-11-13",
+      "time": "19:50",
+      "restaurant": "McDonald's",
+      "total": 13.3,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-11-13",
+      "time": "16:38",
+      "restaurant": "Jimmy John's",
+      "total": 27.05,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-11-12",
+      "time": "12:07",
+      "restaurant": "Ramen Spot",
+      "total": 35.44,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-11-09",
+      "time": "12:11",
+      "restaurant": "McDonald's",
+      "total": 23.76,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-11-07",
+      "time": "19:39",
+      "restaurant": "Martha's Country Bakery",
+      "total": 20.86,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-11-06",
+      "time": "12:03",
+      "restaurant": "McDonald's",
+      "total": 18.84,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-11-04",
+      "time": "18:32",
+      "restaurant": "Jimmy John's",
+      "total": 29.99,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-11-02",
+      "time": "12:19",
+      "restaurant": "LEVANTINE by Hummus Market (Brooklyn)",
+      "total": 34.03,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-10-23",
+      "time": "12:54",
+      "restaurant": "Jimmy John's",
+      "total": 23.73,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-10-22",
+      "time": "21:43",
+      "restaurant": "Martha's Country Bakery",
+      "total": 17.64,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-10-19",
+      "time": "19:29",
+      "restaurant": "Jimmy John's",
+      "total": 23.73,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-10-18",
+      "time": "18:02",
+      "restaurant": "7th Street Burger",
+      "total": 29.1,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-10-16",
+      "time": "13:02",
+      "restaurant": "Jimmy John's",
+      "total": 27.71,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-10-15",
+      "time": "14:36",
+      "restaurant": "Pokeworks",
+      "total": 30.27,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-10-15",
+      "time": "11:38",
+      "restaurant": "Sweetgreen",
+      "total": 23.52,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-10-11",
+      "time": "19:03",
+      "restaurant": "Kabob Shack",
+      "total": 29.76,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-10-11",
+      "time": "00:37",
+      "restaurant": "Shake Shack",
+      "total": 22.56,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-10-09",
+      "time": "18:37",
+      "restaurant": "Martha's Country Bakery",
+      "total": 32.02,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-10-09",
+      "time": "15:05",
+      "restaurant": "7th Street Burger",
+      "total": 29.1,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-10-04",
+      "time": "12:11",
+      "restaurant": "Playa Bowls",
+      "total": 14.67,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-10-03",
+      "time": "11:26",
+      "restaurant": "LEVANTINE by Hummus Market (Brooklyn)",
+      "total": 48.56,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-10-02",
+      "time": "16:03",
+      "restaurant": "Jimmy John's",
+      "total": 27.05,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-10-02",
+      "time": "13:22",
+      "restaurant": "7th Street Burger",
+      "total": 12.09,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-09-30",
+      "time": "18:21",
+      "restaurant": "Petee's Pie Co.",
+      "total": 24.07,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-09-30",
+      "time": "16:43",
+      "restaurant": "McDonald's",
+      "total": 12.86,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-09-29",
+      "time": "17:27",
+      "restaurant": "Jimmy John's",
+      "total": 24.73,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-09-28",
+      "time": "16:23",
+      "restaurant": "The Bedford",
+      "total": 42,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-09-27",
+      "time": "17:32",
+      "restaurant": "Jimmy John's",
+      "total": 24.71,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-09-22",
+      "time": "14:08",
+      "restaurant": "Forma Pasta Factory",
+      "total": 30.02,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-09-19",
+      "time": "14:06",
+      "restaurant": "Sweetgreen",
+      "total": 24.52,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-09-17",
+      "time": "15:02",
+      "restaurant": "Jimmy John's",
+      "total": 28.71,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-09-07",
+      "time": "13:44",
+      "restaurant": "7th Street Burger",
+      "total": 29.09,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-09-06",
+      "time": "14:03",
+      "restaurant": "LEVANTINE by Hummus Market (Brooklyn)",
+      "total": 37.83,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-09-05",
+      "time": "17:04",
+      "restaurant": "7th Street Burger",
+      "total": 28.7,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-09-01",
+      "time": "17:00",
+      "restaurant": "McDonald's",
+      "total": 12.37,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-08-29",
+      "time": "17:18",
+      "restaurant": "Jimmy John's",
+      "total": 26.66,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-08-29",
+      "time": "12:23",
+      "restaurant": "Sweetgreen",
+      "total": 27.9,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-08-28",
+      "time": "12:33",
+      "restaurant": "Pokeworks",
+      "total": 32.23,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-08-25",
+      "time": "17:29",
+      "restaurant": "McDonald's",
+      "total": 12.37,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-08-24",
+      "time": "18:02",
+      "restaurant": "7th Street Burger",
+      "total": 13.94,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-08-22",
+      "time": "11:44",
+      "restaurant": "Sweetgreen",
+      "total": 26.9,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-08-20",
+      "time": "17:48",
+      "restaurant": "7th Street Burger",
+      "total": 15.59,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-08-18",
+      "time": "18:16",
+      "restaurant": "Chipotle Mexican Grill",
+      "total": 123.27,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-08-15",
+      "time": "17:46",
+      "restaurant": "Jimmy John's",
+      "total": 27.55,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-08-15",
+      "time": "12:16",
+      "restaurant": "Sweetgreen",
+      "total": 27.66,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-08-12",
+      "time": "18:36",
+      "restaurant": "Club Club Sandwich",
+      "total": 22.49,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-08-10",
+      "time": "15:05",
+      "restaurant": "Super Burrito",
+      "total": 21.84,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-08-09",
+      "time": "17:56",
+      "restaurant": "McDonald's",
+      "total": 13.11,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-08-08",
+      "time": "11:34",
+      "restaurant": "Sweetgreen",
+      "total": 25.94,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-08-07",
+      "time": "17:47",
+      "restaurant": "Joe's Pizza",
+      "total": 34.72,
+      "items": 0,
+      "type": "pickup"
+    },
+    {
+      "date": "2025-08-06",
+      "time": "12:01",
+      "restaurant": "Sweetgreen",
+      "total": 19.77,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-08-01",
+      "time": "11:42",
+      "restaurant": "Pokeworks",
+      "total": 32.72,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-07-31",
+      "time": "13:44",
+      "restaurant": "Blue Collar",
+      "total": 33.35,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-07-26",
+      "time": "13:25",
+      "restaurant": "LEVANTINE by Hummus Market (Brooklyn)",
+      "total": 24.71,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-07-25",
+      "time": "13:54",
+      "restaurant": "Jimmy John's",
+      "total": 23.89,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-07-25",
+      "time": "11:45",
+      "restaurant": "Sweetgreen",
+      "total": 23.76,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-07-15",
+      "time": "11:45",
+      "restaurant": "CAVA",
+      "total": 112.41,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-07-07",
+      "time": "19:55",
+      "restaurant": "McDonald's",
+      "total": 19.75,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-06-19",
+      "time": "18:01",
+      "restaurant": "LEVANTINE by Hummus Market (Brooklyn)",
+      "total": 25.54,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-06-15",
+      "time": "18:03",
+      "restaurant": "Martha's Country Bakery",
+      "total": 24.67,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-06-15",
+      "time": "15:29",
+      "restaurant": "Kabob Shack",
+      "total": 25.36,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-06-14",
+      "time": "19:35",
+      "restaurant": "Jimmy John's",
+      "total": 30.53,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-06-06",
+      "time": "18:37",
+      "restaurant": "Bis Bas Mediterranean Grill",
+      "total": 20.26,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-05-28",
+      "time": "14:16",
+      "restaurant": "Sweetgreen",
+      "total": 22.76,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-05-25",
+      "time": "14:07",
+      "restaurant": "Pokeworks",
+      "total": 27.17,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-05-23",
+      "time": "12:34",
+      "restaurant": "Sweetgreen",
+      "total": 22.76,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-05-16",
+      "time": "12:36",
+      "restaurant": "Sweetgreen",
+      "total": 27.66,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-05-14",
+      "time": "14:10",
+      "restaurant": "Pokeworks",
+      "total": 27.17,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-05-07",
+      "time": "12:15",
+      "restaurant": "Parm",
+      "total": 158.85,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-05-06",
+      "time": "11:49",
+      "restaurant": "Sweetgreen",
+      "total": 22.76,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-05-04",
+      "time": "14:33",
+      "restaurant": "McDonald's",
+      "total": 22.81,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-05-03",
+      "time": "13:47",
+      "restaurant": "Sweetgreen",
+      "total": 27.66,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-04-29",
+      "time": "12:09",
+      "restaurant": "Sweetgreen",
+      "total": 22.76,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-04-27",
+      "time": "17:49",
+      "restaurant": "Sweetgreen",
+      "total": 22.76,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-04-22",
+      "time": "16:38",
+      "restaurant": "Bis Bas Mediterranean Grill",
+      "total": 27.29,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-04-20",
+      "time": "12:11",
+      "restaurant": "McDonald's",
+      "total": 27.36,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-04-19",
+      "time": "16:21",
+      "restaurant": "Doughnut Plant",
+      "total": 32.98,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-04-16",
+      "time": "18:22",
+      "restaurant": "Sweetgreen",
+      "total": 32.29,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-04-15",
+      "time": "19:55",
+      "restaurant": "Bun haus",
+      "total": 28.89,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-04-14",
+      "time": "17:11",
+      "restaurant": "Martha's Country Bakery",
+      "total": 32.02,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-04-14",
+      "time": "16:18",
+      "restaurant": "Ramen Spot",
+      "total": 34.36,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-04-11",
+      "time": "11:56",
+      "restaurant": "Sweetgreen",
+      "total": 33.65,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-04-07",
+      "time": "18:05",
+      "restaurant": "McDonald's",
+      "total": 21.81,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-04-06",
+      "time": "20:00",
+      "restaurant": "Martha's Country Bakery",
+      "total": 18.64,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-04-06",
+      "time": "13:17",
+      "restaurant": "Bun haus",
+      "total": 31.43,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-04-05",
+      "time": "16:03",
+      "restaurant": "Sweetgreen",
+      "total": 27.39,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-04-05",
+      "time": "10:56",
+      "restaurant": "Pokeworks",
+      "total": 35.27,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-04-04",
+      "time": "17:12",
+      "restaurant": "7th Street Burger",
+      "total": 24.52,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-04-04",
+      "time": "13:18",
+      "restaurant": "Sweetgreen",
+      "total": 27.39,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-04-01",
+      "time": "12:20",
+      "restaurant": "Sweetgreen",
+      "total": 24.52,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-03-29",
+      "time": "20:08",
+      "restaurant": "Bun haus",
+      "total": 47.72,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-03-24",
+      "time": "18:07",
+      "restaurant": "Joe's Pizza",
+      "total": 76.01,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-03-21",
+      "time": "18:09",
+      "restaurant": "McDonald's",
+      "total": 21.81,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-03-21",
+      "time": "12:43",
+      "restaurant": "Sweetgreen",
+      "total": 34.05,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-03-18",
+      "time": "17:20",
+      "restaurant": "Sweetgreen",
+      "total": 28.39,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-03-11",
+      "time": "14:59",
+      "restaurant": "Sweetgreen",
+      "total": 33.05,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-03-10",
+      "time": "18:59",
+      "restaurant": "Sweetgreen",
+      "total": 23.76,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-03-09",
+      "time": "19:20",
+      "restaurant": "Sweetgreen",
+      "total": 28.39,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-03-08",
+      "time": "20:53",
+      "restaurant": "Sweetgreen",
+      "total": 27.39,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-03-04",
+      "time": "17:43",
+      "restaurant": "McDonald's",
+      "total": 15.72,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-02-25",
+      "time": "12:05",
+      "restaurant": "Sadelle's",
+      "total": 154.6,
+      "items": 0,
+      "type": "pickup"
+    },
+    {
+      "date": "2025-02-23",
+      "time": "16:25",
+      "restaurant": "McDonald's",
+      "total": 13.31,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-02-20",
+      "time": "15:57",
+      "restaurant": "McDonald's",
+      "total": 30.3,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-02-19",
+      "time": "12:44",
+      "restaurant": "McDonald's",
+      "total": 13.11,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-02-18",
+      "time": "18:28",
+      "restaurant": "Jimmy John's",
+      "total": 23.57,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-02-18",
+      "time": "12:15",
+      "restaurant": "McDonald's",
+      "total": 13.11,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-02-17",
+      "time": "15:31",
+      "restaurant": "McDonald's",
+      "total": 19.09,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-02-16",
+      "time": "15:30",
+      "restaurant": "Martha's Country Bakery",
+      "total": 24.94,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-02-15",
+      "time": "14:38",
+      "restaurant": "McDonald's",
+      "total": 17.79,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-02-14",
+      "time": "14:58",
+      "restaurant": "McDonald's",
+      "total": 16.76,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-02-14",
+      "time": "12:50",
+      "restaurant": "Sweetgreen",
+      "total": 28.15,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-02-13",
+      "time": "18:23",
+      "restaurant": "Sweetgreen",
+      "total": 28.15,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-02-13",
+      "time": "10:51",
+      "restaurant": "Joe's Pizza",
+      "total": 37.73,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-02-11",
+      "time": "12:07",
+      "restaurant": "The Grey Dog",
+      "total": 155.61,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-02-07",
+      "time": "12:46",
+      "restaurant": "Sweetgreen",
+      "total": 28.42,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-02-06",
+      "time": "16:26",
+      "restaurant": "Super Burrito",
+      "total": 19.66,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-02-03",
+      "time": "11:38",
+      "restaurant": "Parm",
+      "total": 122.92,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-02-02",
+      "time": "12:21",
+      "restaurant": "Sweetgreen",
+      "total": 23.52,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-01-31",
+      "time": "12:38",
+      "restaurant": "Sweetgreen",
+      "total": 23.52,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-01-30",
+      "time": "12:50",
+      "restaurant": "Sweetgreen",
+      "total": 22.76,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-01-29",
+      "time": "11:50",
+      "restaurant": "Mimi Cheng's",
+      "total": 185.95,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-01-28",
+      "time": "12:24",
+      "restaurant": "Sweetgreen",
+      "total": 22.76,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-01-24",
+      "time": "15:07",
+      "restaurant": "Ramen Spot",
+      "total": 54.14,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-01-21",
+      "time": "12:22",
+      "restaurant": "Sweetgreen",
+      "total": 23.52,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-01-15",
+      "time": "21:19",
+      "restaurant": "Sweetgreen",
+      "total": 22.76,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-01-15",
+      "time": "11:52",
+      "restaurant": "Sweetgreen",
+      "total": 22.76,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-01-13",
+      "time": "11:00",
+      "restaurant": "Sweetgreen",
+      "total": 27.06,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-01-09",
+      "time": "15:25",
+      "restaurant": "Martha's Country Bakery",
+      "total": 26.3,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-01-09",
+      "time": "12:34",
+      "restaurant": "Chick Haus",
+      "total": 25.54,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-01-07",
+      "time": "12:35",
+      "restaurant": "McDonald's",
+      "total": 21.29,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-01-06",
+      "time": "14:39",
+      "restaurant": "Sweetgreen",
+      "total": 27.06,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-01-03",
+      "time": "14:51",
+      "restaurant": "McDonald's",
+      "total": 16.37,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2025-01-01",
+      "time": "16:49",
+      "restaurant": "Sweetgreen",
+      "total": 22.06,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-12-22",
+      "time": "15:30",
+      "restaurant": "Bun haus",
+      "total": 13.76,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-12-21",
+      "time": "18:34",
+      "restaurant": "Martha's Country Bakery",
+      "total": 0,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-12-20",
+      "time": "17:29",
+      "restaurant": "OTB",
+      "total": 0,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-12-20",
+      "time": "12:36",
+      "restaurant": "Sweetgreen",
+      "total": 2,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-12-17",
+      "time": "12:20",
+      "restaurant": "Bis Bas Mediterranean Grill",
+      "total": 2,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-12-15",
+      "time": "18:10",
+      "restaurant": "Sweetgreen",
+      "total": 29.06,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-12-12",
+      "time": "12:47",
+      "restaurant": "Sweetgreen",
+      "total": 27.82,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-12-11",
+      "time": "13:11",
+      "restaurant": "Zutto Japanese American Pub",
+      "total": 85.19,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-12-10",
+      "time": "13:31",
+      "restaurant": "Sweetgreen",
+      "total": 36.86,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-12-04",
+      "time": "12:21",
+      "restaurant": "Sadelle's",
+      "total": 157.57,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-12-02",
+      "time": "15:35",
+      "restaurant": "LEVANTINE by Hummus Market (Brooklyn)",
+      "total": 34.52,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-12-01",
+      "time": "13:42",
+      "restaurant": "DoorDash Gift Cards",
+      "total": 99.9,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-12-01",
+      "time": "13:33",
+      "restaurant": "McDonald's",
+      "total": 15.86,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-11-29",
+      "time": "14:06",
+      "restaurant": "Namkeen",
+      "total": 30.08,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-11-27",
+      "time": "16:27",
+      "restaurant": "Martha's Country Bakery",
+      "total": 26.3,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-11-27",
+      "time": "15:48",
+      "restaurant": "McDonald's",
+      "total": 18.77,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-11-26",
+      "time": "12:40",
+      "restaurant": "Chikarashi",
+      "total": 101.79,
+      "items": 0,
+      "type": "pickup"
+    },
+    {
+      "date": "2024-11-05",
+      "time": "11:48",
+      "restaurant": "Sweetgreen",
+      "total": 23.03,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-11-04",
+      "time": "12:40",
+      "restaurant": "Sweetgreen",
+      "total": 27.33,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-11-02",
+      "time": "18:10",
+      "restaurant": "McDonald's",
+      "total": 14.2,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-10-31",
+      "time": "13:39",
+      "restaurant": "Sweetgreen",
+      "total": 27.33,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-10-28",
+      "time": "16:30",
+      "restaurant": "Sweetgreen",
+      "total": 26.74,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-10-27",
+      "time": "14:57",
+      "restaurant": "McDonald's",
+      "total": 21.48,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-10-26",
+      "time": "15:14",
+      "restaurant": "Little Cupcake Bakeshop",
+      "total": 20.04,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-10-25",
+      "time": "17:56",
+      "restaurant": "McDonald's",
+      "total": 18.77,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-10-23",
+      "time": "15:40",
+      "restaurant": "Sweetgreen",
+      "total": 27.33,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-10-16",
+      "time": "15:23",
+      "restaurant": "Super Burrito",
+      "total": 19.66,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-10-14",
+      "time": "14:53",
+      "restaurant": "Sweetgreen",
+      "total": 27.33,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-10-11",
+      "time": "20:31",
+      "restaurant": "Sweetgreen",
+      "total": 27.33,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-10-09",
+      "time": "13:26",
+      "restaurant": "7th Street Burger",
+      "total": 21.97,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-10-03",
+      "time": "11:47",
+      "restaurant": "Bobby Flay Steak by Wonder",
+      "total": 54.29,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-10-02",
+      "time": "12:35",
+      "restaurant": "Gristedes",
+      "total": 12.63,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-10-02",
+      "time": "12:35",
+      "restaurant": "DashMart",
+      "total": 13.19,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-10-02",
+      "time": "12:35",
+      "restaurant": "Sweetgreen",
+      "total": 21.92,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-10-01",
+      "time": "15:44",
+      "restaurant": "Sweetgreen",
+      "total": 18.03,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-09-30",
+      "time": "17:46",
+      "restaurant": "Sweetgreen",
+      "total": 23.03,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-09-29",
+      "time": "15:15",
+      "restaurant": "Blue Collar",
+      "total": 40.98,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-09-26",
+      "time": "16:22",
+      "restaurant": "Petee's Pie Co.",
+      "total": 31.83,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-09-25",
+      "time": "12:57",
+      "restaurant": "Sweetgreen",
+      "total": 23.03,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-09-24",
+      "time": "12:54",
+      "restaurant": "LEVANTINE by Hummus Market (Brooklyn)",
+      "total": 49.73,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-09-20",
+      "time": "18:24",
+      "restaurant": "LEVANTINE by Hummus Market (Brooklyn)",
+      "total": 34.52,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-09-17",
+      "time": "13:38",
+      "restaurant": "McDonald's",
+      "total": 19.2,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-09-17",
+      "time": "12:55",
+      "restaurant": "Sweetgreen",
+      "total": 22.44,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-09-13",
+      "time": "15:13",
+      "restaurant": "McDonald's",
+      "total": 10.92,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-09-13",
+      "time": "15:13",
+      "restaurant": "McDonald's",
+      "total": 14.57,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-09-13",
+      "time": "12:11",
+      "restaurant": "Sweetgreen",
+      "total": 22.44,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-09-12",
+      "time": "13:01",
+      "restaurant": "Sweetgreen",
+      "total": 22.44,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-09-11",
+      "time": "13:43",
+      "restaurant": "Petee's Pie Co.",
+      "total": 21.36,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-09-08",
+      "time": "13:09",
+      "restaurant": "McDonald's",
+      "total": 23.87,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-09-08",
+      "time": "11:06",
+      "restaurant": "Sweetgreen",
+      "total": 22.44,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-09-07",
+      "time": "16:01",
+      "restaurant": "Jimmy John's",
+      "total": 26.97,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-09-05",
+      "time": "11:26",
+      "restaurant": "McDonald's",
+      "total": 19.2,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-09-04",
+      "time": "17:12",
+      "restaurant": "Sweetgreen",
+      "total": 22.44,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-09-03",
+      "time": "19:21",
+      "restaurant": "Springbone Kitchen",
+      "total": 52.17,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-08-31",
+      "time": "20:29",
+      "restaurant": "Gristedes",
+      "total": 28.75,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-08-31",
+      "time": "20:28",
+      "restaurant": "The Chocolate Room",
+      "total": 17.05,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-08-31",
+      "time": "16:53",
+      "restaurant": "Bobby Flay Steak by Wonder",
+      "total": 62.19,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-08-09",
+      "time": "12:18",
+      "restaurant": "Sweetgreen",
+      "total": 22.76,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-08-08",
+      "time": "13:58",
+      "restaurant": "Kabob Shack",
+      "total": 20.57,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-08-06",
+      "time": "15:30",
+      "restaurant": "Westville",
+      "total": 29.02,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-08-02",
+      "time": "14:30",
+      "restaurant": "7th Street Burger",
+      "total": 21.97,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-08-02",
+      "time": "13:04",
+      "restaurant": "Gong Cha",
+      "total": 6.83,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-08-02",
+      "time": "13:04",
+      "restaurant": "Sweetgreen",
+      "total": 16.63,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-07-19",
+      "time": "15:40",
+      "restaurant": "Barano",
+      "total": 51.25,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-07-06",
+      "time": "12:19",
+      "restaurant": "Westville",
+      "total": 29.02,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-07-05",
+      "time": "12:17",
+      "restaurant": "Westville",
+      "total": 33.38,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-07-01",
+      "time": "13:38",
+      "restaurant": "Westville",
+      "total": 24.67,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-07-01",
+      "time": "11:10",
+      "restaurant": "Sweetgreen",
+      "total": 17.76,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-06-25",
+      "time": "11:02",
+      "restaurant": "Super Burrito",
+      "total": 19.66,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-06-23",
+      "time": "17:01",
+      "restaurant": "Sweetgreen",
+      "total": 22.76,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-06-22",
+      "time": "13:45",
+      "restaurant": "DashMart",
+      "total": 26.63,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-06-20",
+      "time": "14:27",
+      "restaurant": "Martha's Country Bakery",
+      "total": 25.65,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-06-12",
+      "time": "15:32",
+      "restaurant": "Martha's Country Bakery",
+      "total": 25.65,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-06-12",
+      "time": "13:03",
+      "restaurant": "Bobby Flay Steak by Wonder",
+      "total": 46.39,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-06-08",
+      "time": "15:34",
+      "restaurant": "Vernon Grille",
+      "total": 27.92,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-06-07",
+      "time": "14:45",
+      "restaurant": "Martha's Country Bakery",
+      "total": 17.31,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-06-06",
+      "time": "15:29",
+      "restaurant": "Taste Creme",
+      "total": 24.21,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-06-04",
+      "time": "12:18",
+      "restaurant": "Martha's Country Bakery",
+      "total": 25.65,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-06-02",
+      "time": "17:18",
+      "restaurant": "7th Street Burger",
+      "total": 28.39,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-06-01",
+      "time": "14:46",
+      "restaurant": "Martha's Country Bakery",
+      "total": 20.65,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-05-27",
+      "time": "20:34",
+      "restaurant": "Martha's Country Bakery",
+      "total": 17.31,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-05-27",
+      "time": "14:53",
+      "restaurant": "Martha's Country Bakery",
+      "total": 22.38,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-05-19",
+      "time": "12:53",
+      "restaurant": "Walgreens",
+      "total": 6.23,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-05-19",
+      "time": "12:51",
+      "restaurant": "Mesa Coyoacan",
+      "total": 32.29,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-05-17",
+      "time": "14:49",
+      "restaurant": "Pokeworks",
+      "total": 28.97,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-05-16",
+      "time": "13:00",
+      "restaurant": "[DNU]-DNU DUPE INACTIVE BIZ DO NOT CHANGE - GRAVEYARD",
+      "total": 26.74,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-04-26",
+      "time": "18:53",
+      "restaurant": "7th Street Burger",
+      "total": 25.56,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-04-26",
+      "time": "15:15",
+      "restaurant": "Martha's Country Bakery",
+      "total": 22.38,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-04-25",
+      "time": "16:27",
+      "restaurant": "Ramen Spot",
+      "total": 38.69,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-04-18",
+      "time": "10:17",
+      "restaurant": "Russ & Daughters",
+      "total": 62.92,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-04-17",
+      "time": "14:22",
+      "restaurant": "Pokeworks",
+      "total": 22.22,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-04-14",
+      "time": "13:28",
+      "restaurant": "[DNU]-DNU DUPE INACTIVE BIZ DO NOT CHANGE - GRAVEYARD",
+      "total": 39.91,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-04-12",
+      "time": "19:45",
+      "restaurant": "Levain Bakery",
+      "total": 21.29,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-04-09",
+      "time": "10:41",
+      "restaurant": "Jimmy John's",
+      "total": 25.97,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-04-01",
+      "time": "19:36",
+      "restaurant": "Super Burrito",
+      "total": 13.79,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-03-29",
+      "time": "16:11",
+      "restaurant": "[DNU]-DNU DUPE INACTIVE BIZ DO NOT CHANGE - GRAVEYARD",
+      "total": 25.11,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-02-25",
+      "time": "18:36",
+      "restaurant": "Levain Bakery",
+      "total": 18.53,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-02-04",
+      "time": "16:26",
+      "restaurant": "Levain Bakery",
+      "total": 16.48,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-02-03",
+      "time": "19:17",
+      "restaurant": "Frankies 457 Spuntino",
+      "total": 20.35,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2024-01-27",
+      "time": "16:27",
+      "restaurant": "Pokeworks",
+      "total": 0,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2023-12-26",
+      "time": "16:21",
+      "restaurant": "Pokeworks",
+      "total": 2,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2023-12-23",
+      "time": "14:17",
+      "restaurant": "Martha's Country Bakery",
+      "total": 0,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2023-12-23",
+      "time": "14:11",
+      "restaurant": "Wegmans Meals2GO",
+      "total": 0,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2023-12-21",
+      "time": "13:23",
+      "restaurant": "Westville",
+      "total": 0,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2023-12-19",
+      "time": "19:23",
+      "restaurant": "Martha's Country Bakery",
+      "total": 0,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2023-12-18",
+      "time": "16:30",
+      "restaurant": "Tacombi",
+      "total": 0,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2023-12-16",
+      "time": "11:05",
+      "restaurant": "[DNU]-DNU DUPE INACTIVE BIZ DO NOT CHANGE - GRAVEYARD",
+      "total": 0,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2023-12-14",
+      "time": "16:05",
+      "restaurant": "WAZA Sushi & Ramen",
+      "total": 0,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2023-12-13",
+      "time": "17:38",
+      "restaurant": "Martha's Country Bakery",
+      "total": 0,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2023-12-13",
+      "time": "11:42",
+      "restaurant": "McDonald's",
+      "total": 0,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2023-12-09",
+      "time": "14:23",
+      "restaurant": "Levain Bakery",
+      "total": 0,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2023-12-08",
+      "time": "13:33",
+      "restaurant": "Martha's Country Bakery",
+      "total": 0,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2023-12-08",
+      "time": "11:28",
+      "restaurant": "DashMart",
+      "total": 0,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2023-12-08",
+      "time": "11:17",
+      "restaurant": "Moe's pastrami &burger",
+      "total": 0,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2023-12-03",
+      "time": "12:00",
+      "restaurant": "Pokeworks",
+      "total": 0,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2023-11-30",
+      "time": "16:50",
+      "restaurant": "Levain Bakery",
+      "total": 16.5,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2023-11-29",
+      "time": "17:12",
+      "restaurant": "Pies n Thighs",
+      "total": 27.38,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2023-11-28",
+      "time": "16:37",
+      "restaurant": "Levain Bakery",
+      "total": 16.5,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2023-11-25",
+      "time": "17:20",
+      "restaurant": "Super Burrito",
+      "total": 19.31,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2023-11-22",
+      "time": "13:15",
+      "restaurant": "Pokeworks",
+      "total": 19.99,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2023-11-21",
+      "time": "18:06",
+      "restaurant": "Williamsburg Halal Food",
+      "total": 18.02,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2023-11-09",
+      "time": "17:54",
+      "restaurant": "Levain Bakery",
+      "total": 10.5,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2023-11-05",
+      "time": "18:24",
+      "restaurant": "Doughnut Plant",
+      "total": 24.64,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2023-10-29",
+      "time": "19:10",
+      "restaurant": "The Chocolate Room",
+      "total": 23.22,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2023-10-21",
+      "time": "20:49",
+      "restaurant": "McDonald's",
+      "total": 7.74,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2023-10-08",
+      "time": "18:56",
+      "restaurant": "ELLA CROWN Bakehouse",
+      "total": 38.96,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2023-10-07",
+      "time": "15:16",
+      "restaurant": "Martha's Country Bakery",
+      "total": 27.13,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2023-10-06",
+      "time": "12:54",
+      "restaurant": "[DNU]-DNU DUPE INACTIVE BIZ DO NOT CHANGE - GRAVEYARD",
+      "total": 30.76,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2023-09-01",
+      "time": "18:41",
+      "restaurant": "Martha's Country Bakery",
+      "total": 27.13,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2023-09-01",
+      "time": "17:37",
+      "restaurant": "McDonald's",
+      "total": 15.47,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2023-08-23",
+      "time": "17:13",
+      "restaurant": "Win Son Bakery",
+      "total": 27,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2023-08-10",
+      "time": "16:39",
+      "restaurant": "McDonald's",
+      "total": 31.58,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2023-08-04",
+      "time": "17:54",
+      "restaurant": "McDonald's",
+      "total": 22.94,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2023-07-08",
+      "time": "14:05",
+      "restaurant": "Zaytoons",
+      "total": 59.73,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2023-06-24",
+      "time": "18:33",
+      "restaurant": "Cafe Colette",
+      "total": 35.72,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2023-06-18",
+      "time": "17:40",
+      "restaurant": "Win Son Bakery",
+      "total": 33.25,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2023-05-29",
+      "time": "14:45",
+      "restaurant": "Blue Collar",
+      "total": 24.49,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2023-05-26",
+      "time": "16:20",
+      "restaurant": "Win Son Bakery",
+      "total": 26.51,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2022-01-15",
+      "time": "20:45",
+      "restaurant": "Fry the Coop",
+      "total": 60,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2021-10-09",
+      "time": "18:27",
+      "restaurant": "Fry the Coop",
+      "total": 26.05,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2021-10-01",
+      "time": "22:32",
+      "restaurant": "Chick-fil-A",
+      "total": 28.02,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2021-05-12",
+      "time": "19:30",
+      "restaurant": "Fry the Coop",
+      "total": 29.77,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2021-04-21",
+      "time": "20:49",
+      "restaurant": "Honey Butter Fried Chicken",
+      "total": 65.33,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2021-04-17",
+      "time": "18:07",
+      "restaurant": "Honey Butter Fried Chicken",
+      "total": 43.74,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2021-04-13",
+      "time": "17:59",
+      "restaurant": "7-Eleven",
+      "total": 8.14,
+      "items": 0,
+      "type": "delivery"
+    },
+    {
+      "date": "2021-04-13",
+      "time": "17:57",
+      "restaurant": "Zayna Mediterranean Grill",
+      "total": 32.05,
+      "items": 0,
+      "type": "delivery"
+    }
   ]
 }
