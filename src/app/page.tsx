@@ -191,8 +191,8 @@ interface TabButtonProps {
 function TabButton({ isSelected, onClick, children }: TabButtonProps): React.ReactElement {
   const baseClass = "px-2 sm:px-3 py-1.5 rounded-md text-[10px] sm:text-xs font-mono transition-all duration-200";
   const stateClass = isSelected
-    ? "bg-zinc-800 text-zinc-200 shadow-inner"
-    : "text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/50";
+    ? "bg-zinc-800 text-zinc-100 shadow-inner"
+    : "text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/50";
 
   return (
     <button onClick={onClick} className={`${baseClass} ${stateClass}`}>
@@ -213,12 +213,12 @@ function StatsDisplay({ stats, label }: StatsDisplayProps): React.ReactElement {
         <span className={`text-4xl sm:text-5xl font-bold font-mono ${getSuccessRateColor(stats.successRate)}`}>
           {stats.successRate}%
         </span>
-        <span className="text-zinc-600 text-sm uppercase tracking-wider">success rate</span>
+        <span className="text-zinc-400 text-sm uppercase tracking-wider">success rate</span>
       </div>
-      <div className="text-[10px] text-zinc-600 mt-1">
+      <div className="text-[10px] text-zinc-400 mt-1">
         {stats.cleanDays.toLocaleString()} of {stats.totalDays.toLocaleString()} days without ordering
       </div>
-      <div className="text-[10px] text-red-400/60 mt-1 font-mono">
+      <div className="text-[10px] text-red-400 mt-1 font-mono">
         ${formatCurrency(stats.totalSpent)} {label}
       </div>
     </div>
@@ -278,7 +278,7 @@ function YearGrid({ yearData }: { yearData: YearActivity }) {
         {monthLabels.map((m, i) => (
           <div
             key={`${year}-month-${i}`}
-            className="absolute text-[8px] text-zinc-600 font-mono"
+            className="absolute text-[8px] text-zinc-500 font-mono"
             style={{ left: `${m.weekIndex * 13}px` }}
           >
             {m.month}
@@ -291,7 +291,7 @@ function YearGrid({ yearData }: { yearData: YearActivity }) {
         <div className="flex flex-col gap-[2px] flex-shrink-0">
           {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((d, i) => (
             <div key={`${year}-day-${i}`} className="h-[10px] sm:h-[11px] flex items-center">
-              <span className="text-[7px] text-zinc-600 w-3 text-right font-mono">{d}</span>
+              <span className="text-[7px] text-zinc-500 w-3 text-right font-mono">{d}</span>
             </div>
           ))}
         </div>
@@ -385,7 +385,7 @@ export default function Home() {
   if (!mounted) {
     return (
       <div className="min-h-screen bg-[#09090b] flex items-center justify-center">
-        <div className="text-zinc-600 text-sm uppercase tracking-widest">loading...</div>
+        <div className="text-zinc-400 text-sm uppercase tracking-widest">loading...</div>
       </div>
     );
   }
@@ -407,8 +407,8 @@ export default function Home() {
             </h1>
             <span className="text-red-500/70 text-xs sm:text-sm">◉</span>
           </div>
-          {/* Tagline - improved contrast */}
-          <p className="text-[10px] sm:text-xs text-zinc-500 tracking-[0.2em] italic">
+          {/* Tagline */}
+          <p className="text-[10px] sm:text-xs text-zinc-400 tracking-[0.2em] italic">
             one order at a time
           </p>
         </div>
@@ -450,7 +450,7 @@ export default function Home() {
                 <span className="text-white">{pad(time.seconds)}</span>
               </div>
             </div>
-            <div className="flex justify-center gap-[4.5rem] sm:gap-[7rem] md:gap-[9rem] text-zinc-500 text-[10px] sm:text-xs uppercase tracking-[0.25em] mt-3 sm:mt-5">
+            <div className="flex justify-center gap-[4.5rem] sm:gap-[7rem] md:gap-[9rem] text-zinc-400 text-[10px] sm:text-xs uppercase tracking-[0.25em] mt-3 sm:mt-5">
               <span className="text-center">hours</span>
               <span className="text-center">minutes</span>
               <span className="text-center">seconds</span>
@@ -464,11 +464,11 @@ export default function Home() {
         </p>
 
         {/* Last order */}
-        <p className="text-zinc-500 text-[11px] sm:text-sm mt-5 sm:mt-6 uppercase tracking-wider">
+        <p className="text-zinc-400 text-[11px] sm:text-sm mt-5 sm:mt-6 uppercase tracking-wider">
           last relapse:{" "}
-          <span className="text-zinc-400">{latestOrder.restaurant}</span>
-          <span className="mx-2 text-zinc-600">·</span>
-          <span className="text-red-400/80">${latestOrder.total.toFixed(2)}</span>
+          <span className="text-zinc-300">{latestOrder.restaurant}</span>
+          <span className="mx-2 text-zinc-500">·</span>
+          <span className="text-red-400">${latestOrder.total.toFixed(2)}</span>
         </p>
       </main>
 
@@ -510,10 +510,10 @@ export default function Home() {
                 {[...yearActivities].reverse().map((ya) => (
                   <div key={ya.year} className="border border-zinc-800/50 rounded-lg p-3 sm:p-4 bg-zinc-900/20">
                     <div className="flex items-center justify-between mb-3 flex-wrap gap-2">
-                      <span className="text-sm font-mono text-zinc-400">{ya.year}</span>
-                      <div className="flex items-center gap-2 sm:gap-3 text-[9px] sm:text-[10px] text-zinc-600">
-                        <span>{ya.totalOrders}</span>
-                        <span className="text-red-400/60">${formatCurrency(ya.totalSpent, false)}</span>
+                      <span className="text-sm font-mono text-zinc-300">{ya.year}</span>
+                      <div className="flex items-center gap-2 sm:gap-3 text-[9px] sm:text-[10px] text-zinc-400">
+                        <span>{ya.totalOrders} orders</span>
+                        <span className="text-red-400">${formatCurrency(ya.totalSpent, false)}</span>
                         <span className={getSuccessRateColor(ya.successRate)}>{ya.successRate}%</span>
                       </div>
                     </div>
@@ -534,13 +534,13 @@ export default function Home() {
             <div className="flex justify-center items-center gap-4 mt-4">
               <div className="flex items-center gap-1.5">
                 <div className="w-[10px] h-[10px] rounded-[2px] bg-emerald-900/30 border border-emerald-900/40" />
-                <span className="text-[9px] text-zinc-500">no orders</span>
+                <span className="text-[9px] text-zinc-400">no orders</span>
               </div>
               <div className="flex items-center gap-1">
                 <div className="w-[10px] h-[10px] rounded-[2px] bg-red-900/50 border border-red-900/60" />
                 <div className="w-[10px] h-[10px] rounded-[2px] bg-red-700/60 border border-red-700/50" />
                 <div className="w-[10px] h-[10px] rounded-[2px] bg-red-500/80 border border-red-500/60" />
-                <span className="text-[9px] text-zinc-500 ml-0.5">1 → 3+ orders</span>
+                <span className="text-[9px] text-zinc-400 ml-0.5">1 → 3+ orders</span>
               </div>
             </div>
           </div>
@@ -548,25 +548,25 @@ export default function Home() {
           {/* Secondary stats */}
           <div className="flex justify-center items-stretch gap-2 sm:gap-3 mb-5">
             <div className="bg-zinc-900/40 border border-zinc-800/60 rounded-lg px-3 sm:px-4 py-2 text-center">
-              <div className="text-lg sm:text-xl font-bold text-zinc-400 font-mono">
+              <div className="text-lg sm:text-xl font-bold text-zinc-300 font-mono">
                 {displayStats.totalOrders}
               </div>
-              <div className="text-[8px] sm:text-[9px] text-zinc-600 uppercase tracking-wider">orders</div>
+              <div className="text-[8px] sm:text-[9px] text-zinc-400 uppercase tracking-wider">orders</div>
             </div>
             <div className="bg-zinc-900/40 border border-zinc-800/60 rounded-lg px-3 sm:px-4 py-2 text-center">
-              <div className="text-lg sm:text-xl font-bold text-zinc-500 font-mono">
+              <div className="text-lg sm:text-xl font-bold text-zinc-300 font-mono">
                 {displayStats.totalDays.toLocaleString()}
               </div>
-              <div className="text-[8px] sm:text-[9px] text-zinc-600 uppercase tracking-wider">days tracked</div>
+              <div className="text-[8px] sm:text-[9px] text-zinc-400 uppercase tracking-wider">days tracked</div>
             </div>
           </div>
 
           {/* Top enablers */}
           <div className="text-center">
-            <span className="text-[9px] text-zinc-700 uppercase tracking-wider">
+            <span className="text-[9px] text-zinc-500 uppercase tracking-wider">
               top enablers{selectedYear !== "all" ? ` in ${selectedYear}` : ""}:{" "}
             </span>
-            <span className="text-[10px] text-zinc-500 font-mono">
+            <span className="text-[10px] text-zinc-400 font-mono">
               {topRestaurants.length > 0
                 ? topRestaurants.map(([name, count]) => `${name} (${count})`).join(" · ")
                 : "none yet"
