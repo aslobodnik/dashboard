@@ -29,6 +29,34 @@ interface YearActivity {
   totalSpent: number;
 }
 
+interface Stats {
+  totalDays: number;
+  totalOrders: number;
+  cleanDays: number;
+  successRate: number;
+  totalSpent: number;
+}
+
+function getSuccessRateColor(rate: number): string {
+  if (rate >= 70) return "text-emerald-400";
+  if (rate >= 50) return "text-yellow-400";
+  return "text-red-400";
+}
+
+function getCellColors(count: number): string {
+  if (count === 0) return "bg-emerald-900/30 border border-emerald-900/40";
+  if (count === 1) return "bg-red-900/50 border border-red-900/60";
+  if (count === 2) return "bg-red-700/60 border border-red-700/50";
+  return "bg-red-500/80 border border-red-500/60";
+}
+
+function formatCurrency(amount: number, showDecimals = true): string {
+  return amount.toLocaleString(undefined, {
+    minimumFractionDigits: showDecimals ? 2 : 0,
+    maximumFractionDigits: showDecimals ? 2 : 0,
+  });
+}
+
 function getTimeSince(dateStr: string, timeStr?: string) {
   const [year, month, day] = dateStr.split("-").map(Number);
   let hours = 0;
@@ -154,6 +182,49 @@ function getTopRestaurants(orderList: Order[], year?: number) {
     .slice(0, 3);
 }
 
+interface TabButtonProps {
+  isSelected: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
+}
+
+function TabButton({ isSelected, onClick, children }: TabButtonProps): React.ReactElement {
+  const baseClass = "px-2 sm:px-3 py-1.5 rounded-md text-[10px] sm:text-xs font-mono transition-all duration-200";
+  const stateClass = isSelected
+    ? "bg-zinc-800 text-zinc-200 shadow-inner"
+    : "text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/50";
+
+  return (
+    <button onClick={onClick} className={`${baseClass} ${stateClass}`}>
+      {children}
+    </button>
+  );
+}
+
+interface StatsDisplayProps {
+  stats: Stats;
+  label: string;
+}
+
+function StatsDisplay({ stats, label }: StatsDisplayProps): React.ReactElement {
+  return (
+    <div className="text-center mb-6">
+      <div className="inline-flex items-baseline gap-1">
+        <span className={`text-4xl sm:text-5xl font-bold font-mono ${getSuccessRateColor(stats.successRate)}`}>
+          {stats.successRate}%
+        </span>
+        <span className="text-zinc-600 text-sm uppercase tracking-wider">success rate</span>
+      </div>
+      <div className="text-[10px] text-zinc-600 mt-1">
+        {stats.cleanDays.toLocaleString()} of {stats.totalDays.toLocaleString()} days without ordering
+      </div>
+      <div className="text-[10px] text-red-400/60 mt-1 font-mono">
+        ${formatCurrency(stats.totalSpent)} {label}
+      </div>
+    </div>
+  );
+}
+
 function YearGrid({ yearData }: { yearData: YearActivity }) {
   const { days, year } = yearData;
 
@@ -234,22 +305,18 @@ function YearGrid({ yearData }: { yearData: YearActivity }) {
                   return <div key={day.dateStr} className="w-[10px] h-[10px] sm:w-[11px] sm:h-[11px]" />;
                 }
                 const isToday = day.dateStr === new Date().toISOString().split('T')[0];
+                const hoverShadow = day.count > 0
+                  ? "group-hover:shadow-[0_0_12px_rgba(239,68,68,0.5)]"
+                  : "group-hover:shadow-[0_0_8px_rgba(16,185,129,0.3)]";
+                const todayRing = isToday ? "ring-1 ring-zinc-400 ring-offset-1 ring-offset-[#09090b]" : "";
+
                 return (
                   <div key={day.dateStr} className="group relative hover:z-[90]">
                     <div
                       className={`
                         w-[10px] h-[10px] sm:w-[11px] sm:h-[11px] rounded-[2px] transition-all duration-200
-                        ${day.count === 0
-                          ? 'bg-emerald-900/30 border border-emerald-900/40'
-                          : day.count === 1
-                            ? 'bg-red-900/50 border border-red-900/60'
-                            : day.count === 2
-                              ? 'bg-red-700/60 border border-red-700/50'
-                              : 'bg-red-500/80 border border-red-500/60'
-                        }
-                        ${isToday ? 'ring-1 ring-zinc-400 ring-offset-1 ring-offset-[#09090b]' : ''}
-                        group-hover:scale-150 group-hover:z-10
-                        ${day.count > 0 ? 'group-hover:shadow-[0_0_12px_rgba(239,68,68,0.5)]' : 'group-hover:shadow-[0_0_8px_rgba(16,185,129,0.3)]'}
+                        ${getCellColors(day.count)} ${todayRing}
+                        group-hover:scale-150 group-hover:z-10 ${hoverShadow}
                       `}
                     />
                     {/* Tooltip */}
@@ -287,15 +354,19 @@ export default function Home() {
 
   // Default to current year
   const currentYear = new Date().getFullYear();
-  const [selectedYear, setSelectedYear] = useState<number | 'all'>(currentYear);
+  const [selectedYear, setSelectedYear] = useState<number | "all">(currentYear);
 
-  const selectedYearData = selectedYear === 'all'
+  const selectedYearData = selectedYear === "all"
     ? null
     : yearActivities.find(y => y.year === selectedYear);
 
+  const displayStats: Stats = selectedYear === "all"
+    ? allTimeStats
+    : selectedYearData ?? { totalDays: 0, totalOrders: 0, cleanDays: 0, successRate: 0, totalSpent: 0 };
+
   const topRestaurants = getTopRestaurants(
     orderList,
-    selectedYear === 'all' ? undefined : selectedYear
+    selectedYear === "all" ? undefined : selectedYear
   );
 
   const [time, setTime] = useState(() => getTimeSince(latestOrder.date, latestOrder.time));
@@ -409,72 +480,31 @@ export default function Home() {
           <div className="flex justify-center mb-6 overflow-x-auto px-2">
             <div className="inline-flex items-center gap-0.5 sm:gap-1 bg-zinc-900/60 border border-zinc-800/80 rounded-lg p-1 min-w-max">
               {yearActivities.map((ya) => (
-                <button
+                <TabButton
                   key={ya.year}
+                  isSelected={selectedYear === ya.year}
                   onClick={() => setSelectedYear(ya.year)}
-                  className={`
-                    px-2 sm:px-3 py-1.5 rounded-md text-[10px] sm:text-xs font-mono transition-all duration-200
-                    ${selectedYear === ya.year
-                      ? 'bg-zinc-800 text-zinc-200 shadow-inner'
-                      : 'text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/50'
-                    }
-                  `}
                 >
                   {ya.year}
-                </button>
+                </TabButton>
               ))}
               <div className="w-px h-5 bg-zinc-700 mx-0.5 sm:mx-1" />
-              <button
-                onClick={() => setSelectedYear('all')}
-                className={`
-                  px-2 sm:px-3 py-1.5 rounded-md text-[10px] sm:text-xs font-mono transition-all duration-200
-                  ${selectedYear === 'all'
-                    ? 'bg-zinc-800 text-zinc-200 shadow-inner'
-                    : 'text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/50'
-                  }
-                `}
-              >
+              <TabButton isSelected={selectedYear === "all"} onClick={() => setSelectedYear("all")}>
                 ALL
-              </button>
+              </TabButton>
             </div>
           </div>
 
           {/* Stats for selected year/all time */}
-          {selectedYear === 'all' ? (
-            <div className="text-center mb-6">
-              <div className="inline-flex items-baseline gap-1">
-                <span className={`text-4xl sm:text-5xl font-bold font-mono ${allTimeStats.successRate >= 70 ? 'text-emerald-400' : allTimeStats.successRate >= 50 ? 'text-yellow-400' : 'text-red-400'}`}>
-                  {allTimeStats.successRate}%
-                </span>
-                <span className="text-zinc-600 text-sm uppercase tracking-wider">success rate</span>
-              </div>
-              <div className="text-[10px] text-zinc-600 mt-1">
-                {allTimeStats.cleanDays.toLocaleString()} of {allTimeStats.totalDays.toLocaleString()} days without ordering
-              </div>
-              <div className="text-[10px] text-red-400/60 mt-1 font-mono">
-                ${allTimeStats.totalSpent.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} total damage
-              </div>
-            </div>
+          {selectedYear === "all" ? (
+            <StatsDisplay stats={allTimeStats} label="total damage" />
           ) : selectedYearData && (
-            <div className="text-center mb-6">
-              <div className="inline-flex items-baseline gap-1">
-                <span className={`text-4xl sm:text-5xl font-bold font-mono ${selectedYearData.successRate >= 70 ? 'text-emerald-400' : selectedYearData.successRate >= 50 ? 'text-yellow-400' : 'text-red-400'}`}>
-                  {selectedYearData.successRate}%
-                </span>
-                <span className="text-zinc-600 text-sm uppercase tracking-wider">success rate</span>
-              </div>
-              <div className="text-[10px] text-zinc-600 mt-1">
-                {selectedYearData.cleanDays} of {selectedYearData.totalDays} days without ordering
-              </div>
-              <div className="text-[10px] text-red-400/60 mt-1 font-mono">
-                ${selectedYearData.totalSpent.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} spent this year
-              </div>
-            </div>
+            <StatsDisplay stats={selectedYearData} label="spent this year" />
           )}
 
           {/* Activity Grid - by year or summary */}
           <div className="mb-6">
-            {selectedYear === 'all' ? (
+            {selectedYear === "all" ? (
               /* All years stacked vertically */
               <div className="space-y-4">
                 {[...yearActivities].reverse().map((ya) => (
@@ -483,10 +513,8 @@ export default function Home() {
                       <span className="text-sm font-mono text-zinc-400">{ya.year}</span>
                       <div className="flex items-center gap-2 sm:gap-3 text-[9px] sm:text-[10px] text-zinc-600">
                         <span>{ya.totalOrders}</span>
-                        <span className="text-red-400/60">${ya.totalSpent.toLocaleString(undefined, { maximumFractionDigits: 0 })}</span>
-                        <span className={ya.successRate >= 70 ? 'text-emerald-400' : ya.successRate >= 50 ? 'text-yellow-400' : 'text-red-400'}>
-                          {ya.successRate}%
-                        </span>
+                        <span className="text-red-400/60">${formatCurrency(ya.totalSpent, false)}</span>
+                        <span className={getSuccessRateColor(ya.successRate)}>{ya.successRate}%</span>
                       </div>
                     </div>
                     <div className="overflow-x-auto pb-2 -mx-3 px-3 sm:mx-0 sm:px-0">
@@ -521,13 +549,13 @@ export default function Home() {
           <div className="flex justify-center items-stretch gap-2 sm:gap-3 mb-5">
             <div className="bg-zinc-900/40 border border-zinc-800/60 rounded-lg px-3 sm:px-4 py-2 text-center">
               <div className="text-lg sm:text-xl font-bold text-zinc-400 font-mono">
-                {selectedYear === 'all' ? allTimeStats.totalOrders : selectedYearData?.totalOrders ?? 0}
+                {displayStats.totalOrders}
               </div>
               <div className="text-[8px] sm:text-[9px] text-zinc-600 uppercase tracking-wider">orders</div>
             </div>
             <div className="bg-zinc-900/40 border border-zinc-800/60 rounded-lg px-3 sm:px-4 py-2 text-center">
               <div className="text-lg sm:text-xl font-bold text-zinc-500 font-mono">
-                {selectedYear === 'all' ? allTimeStats.totalDays.toLocaleString() : selectedYearData?.totalDays ?? 0}
+                {displayStats.totalDays.toLocaleString()}
               </div>
               <div className="text-[8px] sm:text-[9px] text-zinc-600 uppercase tracking-wider">days tracked</div>
             </div>
@@ -536,12 +564,12 @@ export default function Home() {
           {/* Top enablers */}
           <div className="text-center">
             <span className="text-[9px] text-zinc-700 uppercase tracking-wider">
-              top enablers{selectedYear !== 'all' ? ` in ${selectedYear}` : ''}:{" "}
+              top enablers{selectedYear !== "all" ? ` in ${selectedYear}` : ""}:{" "}
             </span>
             <span className="text-[10px] text-zinc-500 font-mono">
               {topRestaurants.length > 0
                 ? topRestaurants.map(([name, count]) => `${name} (${count})`).join(" · ")
-                : 'none yet'
+                : "none yet"
               }
             </span>
           </div>
