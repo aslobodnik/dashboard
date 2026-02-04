@@ -326,43 +326,43 @@ export default function Home() {
       <div className="scanlines opacity-30" />
 
       {/* Header */}
-      <header className="relative z-10 pt-6 sm:pt-8 pb-4 text-center">
-        <div className="inline-flex flex-col items-center">
-          {/* Main title with better contrast */}
-          <div className="flex items-center gap-2 sm:gap-3">
-            <span className="text-red-500/60 text-sm sm:text-base">◉</span>
-            <h1 className="text-[11px] sm:text-sm uppercase tracking-[0.3em] text-zinc-400 font-medium">
+      <header className="relative z-10 pt-8 sm:pt-10 pb-6 sm:pb-8 text-center">
+        <div className="inline-flex flex-col items-center gap-2">
+          {/* Main title */}
+          <div className="flex items-center gap-3 sm:gap-4">
+            <span className="text-red-500/70 text-xs sm:text-sm">◉</span>
+            <h1 className="text-xs sm:text-sm uppercase tracking-[0.35em] text-zinc-300 font-medium">
               doordash recovery
             </h1>
-            <span className="text-red-500/60 text-sm sm:text-base">◉</span>
+            <span className="text-red-500/70 text-xs sm:text-sm">◉</span>
           </div>
-          {/* Whimsical tagline */}
-          <p className="text-[9px] sm:text-[10px] text-zinc-600 tracking-widest mt-1 italic">
+          {/* Tagline - improved contrast */}
+          <p className="text-[10px] sm:text-xs text-zinc-500 tracking-[0.2em] italic">
             one order at a time
           </p>
         </div>
       </header>
 
       {/* Main Timer Section */}
-      <main className="relative z-10 flex-1 flex flex-col items-center justify-center px-4 -mt-4 sm:-mt-16">
+      <main className="relative z-10 flex-1 flex flex-col items-center justify-center px-4 sm:px-6">
         {time.days >= 1 ? (
           /* 1+ days: Days hero with subordinate ticking clock */
           <>
-            <div className="text-center fade-up mt-4 sm:mt-8">
+            <div className="text-center fade-up">
               <div className="timer-digit breathe inline-flex items-baseline">
-                <span className="text-[5rem] sm:text-[7rem] md:text-[8rem] font-bold text-white leading-none">{time.days}</span>
-                <span className="text-zinc-500 text-xl sm:text-2xl md:text-3xl uppercase tracking-[0.2em] ml-3 sm:ml-4 font-medium">
+                <span className="text-[4.5rem] sm:text-[7rem] md:text-[8rem] font-bold text-white leading-none">{time.days}</span>
+                <span className="text-zinc-400 text-lg sm:text-2xl md:text-3xl uppercase tracking-[0.2em] ml-3 sm:ml-4 font-medium">
                   {time.days === 1 ? "day" : "days"}
                 </span>
               </div>
             </div>
-            {/* Subordinate ticking clock - still alive */}
-            <div className="mt-4 sm:mt-6 text-center">
-              <div className="inline-flex items-center text-2xl sm:text-3xl md:text-4xl font-bold text-zinc-500 tracking-tight font-mono">
+            {/* Subordinate ticking clock */}
+            <div className="mt-6 sm:mt-8 text-center">
+              <div className="inline-flex items-center text-2xl sm:text-3xl md:text-4xl font-bold text-zinc-400 tracking-tight font-mono">
                 <span>{pad(time.hours % 24)}</span>
-                <span className="text-red-500/50 colon-pulse mx-1">:</span>
+                <span className="text-red-500/60 colon-pulse mx-1 sm:mx-2">:</span>
                 <span>{pad(time.minutes)}</span>
-                <span className="text-red-500/50 colon-pulse mx-1">:</span>
+                <span className="text-red-500/60 colon-pulse mx-1 sm:mx-2">:</span>
                 <span>{pad(time.seconds)}</span>
               </div>
             </div>
@@ -371,33 +371,33 @@ export default function Home() {
           /* Under 24 hours: Full dramatic HH:MM:SS */
           <>
             <div className="timer-digit breathe text-center">
-              <div className="text-[3.5rem] sm:text-[6rem] md:text-[8rem] lg:text-[10rem] font-bold leading-none tracking-tight flex items-center justify-center">
+              <div className="text-[3rem] sm:text-[5.5rem] md:text-[7rem] lg:text-[9rem] font-bold leading-none tracking-tight flex items-center justify-center">
                 <span className="text-white">{pad(time.hours % 24)}</span>
-                <span className="text-red-500 colon-pulse mx-1 sm:mx-2">:</span>
+                <span className="text-red-500/80 colon-pulse mx-2 sm:mx-3">:</span>
                 <span className="text-white">{pad(time.minutes)}</span>
-                <span className="text-red-500 colon-pulse mx-1 sm:mx-2">:</span>
+                <span className="text-red-500/80 colon-pulse mx-2 sm:mx-3">:</span>
                 <span className="text-white">{pad(time.seconds)}</span>
               </div>
             </div>
-            <div className="flex justify-center gap-8 sm:gap-16 md:gap-24 text-zinc-600 text-[10px] sm:text-xs uppercase tracking-[0.3em] mt-2 sm:mt-4">
-              <span className="w-16 sm:w-24 text-center">hours</span>
-              <span className="w-16 sm:w-24 text-center">minutes</span>
-              <span className="w-16 sm:w-24 text-center">seconds</span>
+            <div className="flex justify-center gap-[4.5rem] sm:gap-[7rem] md:gap-[9rem] text-zinc-500 text-[10px] sm:text-xs uppercase tracking-[0.25em] mt-3 sm:mt-5">
+              <span className="text-center">hours</span>
+              <span className="text-center">minutes</span>
+              <span className="text-center">seconds</span>
             </div>
           </>
         )}
 
         {/* Whimsical message */}
-        <p className="text-zinc-400 text-base sm:text-xl md:text-2xl mt-8 sm:mt-12 italic text-center max-w-lg fade-up">
+        <p className="text-zinc-400 text-sm sm:text-lg md:text-xl mt-10 sm:mt-14 italic text-center max-w-md px-4 fade-up leading-relaxed">
           &ldquo;{getMessage(time.totalHours)}&rdquo;
         </p>
 
         {/* Last order */}
-        <p className="text-zinc-600 text-xs sm:text-sm mt-4 uppercase tracking-wider">
+        <p className="text-zinc-500 text-[11px] sm:text-sm mt-5 sm:mt-6 uppercase tracking-wider">
           last relapse:{" "}
-          <span className="text-zinc-500">{latestOrder.restaurant}</span>
-          <span className="mx-2 text-zinc-700">·</span>
-          <span className="text-red-400/70">${latestOrder.total.toFixed(2)}</span>
+          <span className="text-zinc-400">{latestOrder.restaurant}</span>
+          <span className="mx-2 text-zinc-600">·</span>
+          <span className="text-red-400/80">${latestOrder.total.toFixed(2)}</span>
         </p>
       </main>
 
