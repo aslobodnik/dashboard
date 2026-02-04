@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import orders from "../../data/orders.json";
 
 interface Order {
@@ -12,8 +12,24 @@ interface Order {
   type: string;
 }
 
+interface DayData {
+  date: Date;
+  count: number;
+  dateStr: string;
+}
+
+interface YearActivity {
+  year: number;
+  days: DayData[];
+  totalOrders: number;
+  daysWithOrders: number;
+  totalDays: number;
+  cleanDays: number;
+  successRate: number;
+  totalSpent: number;
+}
+
 function getTimeSince(dateStr: string, timeStr?: string) {
-  // Parse date and time as local
   const [year, month, day] = dateStr.split("-").map(Number);
   let hours = 0;
   let minutes = 0;
@@ -48,53 +64,89 @@ function getMessage(hours: number): string {
   return "legendary. or you forgot your password.";
 }
 
-function getAllTimeActivity(orderList: Order[]) {
+function getActivityByYear(orderList: Order[]): YearActivity[] {
   const now = new Date();
-  now.setHours(23, 59, 59, 999);
+  const currentYear = now.getFullYear();
 
-  // Find the earliest order date
+  // Find earliest year
   const sortedOrders = [...orderList].sort((a, b) => a.date.localeCompare(b.date));
-  const earliestOrderDate = sortedOrders[0]?.date || new Date().toISOString().split('T')[0];
+  const earliestYear = sortedOrders[0] ? parseInt(sortedOrders[0].date.split("-")[0]) : currentYear;
 
-  // Parse earliest date
+  const yearActivities: YearActivity[] = [];
+
+  for (let year = earliestYear; year <= currentYear; year++) {
+    // Start of year (or first order date if earliest year)
+    const yearStart = new Date(year, 0, 1);
+    // End of year (or today if current year)
+    const yearEnd = year === currentYear ? now : new Date(year, 11, 31);
+
+    const days: DayData[] = [];
+    const currentDate = new Date(yearStart);
+
+    while (currentDate <= yearEnd) {
+      const dateStr = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
+      days.push({ date: new Date(currentDate), count: 0, dateStr });
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+
+    // Count orders and spending for this year
+    let totalSpent = 0;
+    orderList.forEach((o) => {
+      if (o.date.startsWith(String(year))) {
+        const day = days.find(d => d.dateStr === o.date);
+        if (day) day.count++;
+        totalSpent += o.total;
+      }
+    });
+
+    const totalOrders = days.reduce((sum, d) => sum + d.count, 0);
+    const daysWithOrders = days.filter(d => d.count > 0).length;
+    const totalDays = days.length;
+    const cleanDays = totalDays - daysWithOrders;
+    const successRate = totalDays > 0 ? Math.round((cleanDays / totalDays) * 100) : 100;
+
+    yearActivities.push({
+      year,
+      days,
+      totalOrders,
+      daysWithOrders,
+      totalDays,
+      cleanDays,
+      successRate,
+      totalSpent,
+    });
+  }
+
+  return yearActivities;
+}
+
+function getAllTimeStats(orderList: Order[]) {
+  const now = new Date();
+  const sortedOrders = [...orderList].sort((a, b) => a.date.localeCompare(b.date));
+  const earliestOrderDate = sortedOrders[0]?.date || now.toISOString().split('T')[0];
+
   const [startYear, startMonth, startDay] = earliestOrderDate.split("-").map(Number);
   const startDate = new Date(startYear, startMonth - 1, startDay);
 
-  // Build all days from start to now
-  const days: { date: Date; count: number; dateStr: string }[] = [];
-  const currentDate = new Date(startDate);
+  const totalDays = Math.floor((now.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)) + 1;
+  const totalOrders = orderList.length;
+  const totalSpent = orderList.reduce((sum, o) => sum + o.total, 0);
 
-  while (currentDate <= now) {
-    const dateStr = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
-    days.push({ date: new Date(currentDate), count: 0, dateStr });
-    currentDate.setDate(currentDate.getDate() + 1);
-  }
-
-  // Count orders per day
-  orderList.forEach((o) => {
-    const day = days.find(d => d.dateStr === o.date);
-    if (day) day.count++;
-  });
-
-  const totalOrders = days.reduce((sum, d) => sum + d.count, 0);
-  const daysWithOrders = days.filter(d => d.count > 0).length;
-  const totalDays = days.length;
+  // Create a set of days with orders
+  const daysWithOrdersSet = new Set(orderList.map(o => o.date));
+  const daysWithOrders = daysWithOrdersSet.size;
   const cleanDays = totalDays - daysWithOrders;
   const successRate = Math.round((cleanDays / totalDays) * 100);
 
-  // Calculate current streak (days without ordering)
-  let streak = 0;
-  for (let i = days.length - 1; i >= 0; i--) {
-    if (days[i].count === 0) streak++;
-    else break;
-  }
-
-  return { days, totalOrders, daysWithOrders, totalDays, cleanDays, successRate, streak };
+  return { totalDays, totalOrders, daysWithOrders, cleanDays, successRate, totalSpent };
 }
 
-function getTopRestaurants(orderList: Order[]) {
+function getTopRestaurants(orderList: Order[], year?: number) {
+  const filtered = year
+    ? orderList.filter(o => o.date.startsWith(String(year)))
+    : orderList;
   const restaurantCounts: Record<string, number> = {};
-  orderList.forEach((o) => {
+  filtered.forEach((o) => {
     restaurantCounts[o.restaurant] = (restaurantCounts[o.restaurant] || 0) + 1;
   });
   return Object.entries(restaurantCounts)
@@ -102,11 +154,156 @@ function getTopRestaurants(orderList: Order[]) {
     .slice(0, 3);
 }
 
+function YearGrid({ yearData }: { yearData: YearActivity }) {
+  const { days, year } = yearData;
+
+  // Organize into weeks (columns)
+  const weeks: DayData[][] = [];
+  const firstDayOfWeek = days[0]?.date.getDay() || 0;
+
+  let currentWeek: DayData[] = [];
+  // Pad the first week with empty cells
+  for (let i = 0; i < firstDayOfWeek; i++) {
+    currentWeek.push({ date: new Date(), count: -1, dateStr: `empty-${year}-${i}` });
+  }
+
+  days.forEach((day) => {
+    currentWeek.push(day);
+    if (currentWeek.length === 7) {
+      weeks.push(currentWeek);
+      currentWeek = [];
+    }
+  });
+
+  if (currentWeek.length > 0) {
+    while (currentWeek.length < 7) {
+      currentWeek.push({ date: new Date(), count: -1, dateStr: `empty-end-${year}-${currentWeek.length}` });
+    }
+    weeks.push(currentWeek);
+  }
+
+  // Calculate month labels
+  const monthLabels: { month: string; weekIndex: number }[] = [];
+  let currentMonth = -1;
+
+  weeks.forEach((week, weekIndex) => {
+    const firstRealDay = week.find(d => d.count !== -1);
+    if (firstRealDay) {
+      const month = firstRealDay.date.getMonth();
+      if (month !== currentMonth) {
+        monthLabels.push({
+          month: firstRealDay.date.toLocaleDateString('en-US', { month: 'short' }),
+          weekIndex,
+        });
+        currentMonth = month;
+      }
+    }
+  });
+
+  return (
+    <div className="relative">
+      {/* Month labels */}
+      <div className="flex gap-[2px] mb-1 h-3 ml-5">
+        {monthLabels.map((m, i) => {
+          const nextIndex = monthLabels[i + 1]?.weekIndex ?? weeks.length;
+          const span = nextIndex - m.weekIndex;
+          return (
+            <div
+              key={`${year}-month-${i}`}
+              className="text-[8px] text-zinc-600 font-mono"
+              style={{
+                position: 'absolute',
+                left: `${20 + m.weekIndex * 15}px`,
+              }}
+            >
+              {m.month}
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="flex gap-3 mt-4">
+        {/* Day labels */}
+        <div className="flex flex-col gap-[3px]">
+          {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((d, i) => (
+            <div key={`${year}-day-${i}`} className="h-[11px] sm:h-[13px] flex items-center">
+              <span className="text-[8px] text-zinc-600 w-3 text-right font-mono">{d}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* Grid cells */}
+        <div className="flex gap-[2px]">
+          {weeks.map((week, weekIndex) => (
+            <div key={`${year}-week-${weekIndex}`} className="flex flex-col gap-[2px]">
+              {week.map((day) => {
+                if (day.count === -1) {
+                  return <div key={day.dateStr} className="w-[11px] h-[11px] sm:w-[13px] sm:h-[13px]" />;
+                }
+                const isToday = day.dateStr === new Date().toISOString().split('T')[0];
+                return (
+                  <div key={day.dateStr} className="group relative hover:z-[90]">
+                    <div
+                      className={`
+                        w-[11px] h-[11px] sm:w-[13px] sm:h-[13px] rounded-[2px] transition-all duration-200
+                        ${day.count === 0
+                          ? 'bg-emerald-900/30 border border-emerald-900/40'
+                          : day.count === 1
+                            ? 'bg-red-900/50 border border-red-900/60'
+                            : day.count === 2
+                              ? 'bg-red-700/60 border border-red-700/50'
+                              : 'bg-red-500/80 border border-red-500/60'
+                        }
+                        ${isToday ? 'ring-1 ring-zinc-400 ring-offset-1 ring-offset-[#09090b]' : ''}
+                        group-hover:scale-150 group-hover:z-10
+                        ${day.count > 0 ? 'group-hover:shadow-[0_0_12px_rgba(239,68,68,0.5)]' : 'group-hover:shadow-[0_0_8px_rgba(16,185,129,0.3)]'}
+                      `}
+                    />
+                    {/* Tooltip */}
+                    <div className="
+                      absolute bottom-full left-1/2 -translate-x-1/2 mb-2
+                      opacity-0 group-hover:opacity-100 transition-opacity duration-150
+                      pointer-events-none z-[100]
+                    ">
+                      <div className="bg-zinc-900 border border-zinc-700 rounded px-2 py-1.5 shadow-xl whitespace-nowrap">
+                        <div className="text-[10px] text-zinc-400 font-mono">
+                          {new Date(day.dateStr + 'T12:00:00').toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
+                        </div>
+                        <div className={`text-[11px] font-medium ${day.count > 0 ? 'text-red-400' : 'text-emerald-400'}`}>
+                          {day.count === 0 ? '✓ No orders' : `${day.count} order${day.count > 1 ? 's' : ''}`}
+                        </div>
+                      </div>
+                      <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-px border-4 border-transparent border-t-zinc-700" />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
   const orderList = orders.orders as Order[];
   const latestOrder = orderList[0];
-  const activity = getAllTimeActivity(orderList);
-  const topRestaurants = getTopRestaurants(orderList);
+  const yearActivities = useMemo(() => getActivityByYear(orderList), [orderList]);
+  const allTimeStats = useMemo(() => getAllTimeStats(orderList), [orderList]);
+
+  // Default to current year
+  const currentYear = new Date().getFullYear();
+  const [selectedYear, setSelectedYear] = useState<number | 'all'>(currentYear);
+
+  const selectedYearData = selectedYear === 'all'
+    ? null
+    : yearActivities.find(y => y.year === selectedYear);
+
+  const topRestaurants = getTopRestaurants(
+    orderList,
+    selectedYear === 'all' ? undefined : selectedYear
+  );
 
   const [time, setTime] = useState(() => getTimeSince(latestOrder.date, latestOrder.time));
   const [mounted, setMounted] = useState(false);
@@ -213,200 +410,107 @@ export default function Home() {
 
       {/* Stats Footer */}
       <footer className="relative z-10 pb-8 pt-4">
-        <div className="max-w-3xl mx-auto px-4">
+        <div className="max-w-4xl mx-auto px-4">
 
-          {/* Primary stat - Success Rate */}
-          <div className="text-center mb-6">
-            <div className="inline-flex items-baseline gap-1">
-              <span className={`text-4xl sm:text-5xl font-bold font-mono ${activity.successRate >= 70 ? 'text-emerald-400' : activity.successRate >= 50 ? 'text-yellow-400' : 'text-red-400'}`}>
-                {activity.successRate}%
-              </span>
-              <span className="text-zinc-600 text-sm uppercase tracking-wider">success rate</span>
-            </div>
-            <div className="text-[10px] text-zinc-600 mt-1">
-              {activity.cleanDays} of {activity.totalDays} days without ordering
+          {/* Year Tabs */}
+          <div className="flex justify-center mb-6">
+            <div className="inline-flex items-center gap-1 bg-zinc-900/60 border border-zinc-800/80 rounded-lg p-1">
+              {yearActivities.map((ya) => (
+                <button
+                  key={ya.year}
+                  onClick={() => setSelectedYear(ya.year)}
+                  className={`
+                    px-3 py-1.5 rounded-md text-xs font-mono transition-all duration-200
+                    ${selectedYear === ya.year
+                      ? 'bg-zinc-800 text-zinc-200 shadow-inner'
+                      : 'text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/50'
+                    }
+                  `}
+                >
+                  {ya.year}
+                </button>
+              ))}
+              <div className="w-px h-5 bg-zinc-700 mx-1" />
+              <button
+                onClick={() => setSelectedYear('all')}
+                className={`
+                  px-3 py-1.5 rounded-md text-xs font-mono transition-all duration-200
+                  ${selectedYear === 'all'
+                    ? 'bg-zinc-800 text-zinc-200 shadow-inner'
+                    : 'text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/50'
+                  }
+                `}
+              >
+                ALL
+              </button>
             </div>
           </div>
 
-          {/* Activity Grid - Full history */}
-          <div className="mb-6">
-            {/* Section header with date range */}
-            <div className="flex items-center justify-center gap-3 mb-3">
-              <div className="h-px w-12 bg-gradient-to-r from-transparent to-zinc-700" />
-              <span className="text-[9px] uppercase tracking-[0.2em] text-zinc-600 font-mono">
-                {activity.days[0]?.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-                {' — '}
-                {activity.days[activity.days.length - 1]?.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-              </span>
-              <div className="h-px w-12 bg-gradient-to-l from-transparent to-zinc-700" />
-            </div>
-
-            {/* Grid container */}
-            <div className="flex justify-center pb-2">
-              <div className="inline-flex gap-3 relative">
-                {/* Day labels */}
-                <div className="flex flex-col gap-[3px] pt-4">
-                  {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((d, i) => (
-                    <div key={i} className="h-[11px] sm:h-[13px] flex items-center">
-                      <span className="text-[8px] text-zinc-600 w-3 text-right font-mono">{d}</span>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Weekly columns */}
-                <div className="relative">
-                  {/* Month labels */}
-                  <div className="flex gap-[2px] mb-1 h-3">
-                    {(() => {
-                      const monthLabels: { month: string; colSpan: number; weekIndex: number }[] = [];
-                      let currentMonth = -1;
-                      let weekCount = 0;
-
-                      // Calculate weeks
-                      const weeks: typeof activity.days[] = [];
-                      const firstDayOfWeek = activity.days[0]?.date.getDay() || 0;
-                      let currentWeek: typeof activity.days = [];
-                      for (let i = 0; i < firstDayOfWeek; i++) {
-                        currentWeek.push({ date: new Date(), count: -1, dateStr: `empty-${i}` });
-                      }
-                      activity.days.forEach((day) => {
-                        currentWeek.push(day);
-                        if (currentWeek.length === 7) {
-                          weeks.push(currentWeek);
-                          currentWeek = [];
-                        }
-                      });
-                      if (currentWeek.length > 0) {
-                        while (currentWeek.length < 7) {
-                          currentWeek.push({ date: new Date(), count: -1, dateStr: `empty-end-${currentWeek.length}` });
-                        }
-                        weeks.push(currentWeek);
-                      }
-
-                      weeks.forEach((week, i) => {
-                        const firstRealDay = week.find(d => d.count !== -1);
-                        if (firstRealDay) {
-                          const month = firstRealDay.date.getMonth();
-                          if (month !== currentMonth) {
-                            if (currentMonth !== -1) {
-                              monthLabels[monthLabels.length - 1].colSpan = weekCount;
-                            }
-                            monthLabels.push({
-                              month: firstRealDay.date.toLocaleDateString('en-US', { month: 'short' }),
-                              colSpan: 0,
-                              weekIndex: i
-                            });
-                            currentMonth = month;
-                            weekCount = 1;
-                          } else {
-                            weekCount++;
-                          }
-                        }
-                      });
-                      if (monthLabels.length > 0) {
-                        monthLabels[monthLabels.length - 1].colSpan = weekCount;
-                      }
-
-                      return (
-                        <div className="flex">
-                          {monthLabels.map((m, i) => (
-                            <div
-                              key={i}
-                              className="text-[8px] text-zinc-600 font-mono"
-                              style={{ width: `${m.colSpan * 13 + (m.colSpan - 1) * 2}px` }}
-                            >
-                              {m.month}
-                            </div>
-                          ))}
-                        </div>
-                      );
-                    })()}
-                  </div>
-
-                  {/* Grid cells organized by week */}
-                  <div className="flex gap-[2px]">
-                    {(() => {
-                      // Organize into weeks (columns)
-                      const weeks: typeof activity.days[] = [];
-                      const firstDayOfWeek = activity.days[0]?.date.getDay() || 0;
-
-                      // Pad the first week with empty cells
-                      let currentWeek: typeof activity.days = [];
-                      for (let i = 0; i < firstDayOfWeek; i++) {
-                        currentWeek.push({ date: new Date(), count: -1, dateStr: `empty-${i}` });
-                      }
-
-                      activity.days.forEach((day) => {
-                        currentWeek.push(day);
-                        if (currentWeek.length === 7) {
-                          weeks.push(currentWeek);
-                          currentWeek = [];
-                        }
-                      });
-
-                      // Push remaining days
-                      if (currentWeek.length > 0) {
-                        while (currentWeek.length < 7) {
-                          currentWeek.push({ date: new Date(), count: -1, dateStr: `empty-end-${currentWeek.length}` });
-                        }
-                        weeks.push(currentWeek);
-                      }
-
-                      return weeks.map((week, weekIndex) => (
-                        <div key={weekIndex} className="flex flex-col gap-[2px]">
-                          {week.map((day) => {
-                            if (day.count === -1) {
-                              return <div key={day.dateStr} className="w-[11px] h-[11px] sm:w-[13px] sm:h-[13px]" />;
-                            }
-                            const isToday = day.dateStr === activity.days[activity.days.length - 1]?.dateStr;
-                            const hasOrders = day.count > 0;
-                            return (
-                              <div key={day.dateStr} className="group relative hover:z-[90]">
-                                <div
-                                  className={`
-                                    w-[11px] h-[11px] sm:w-[13px] sm:h-[13px] rounded-[2px] transition-all duration-200
-                                    ${day.count === 0
-                                      ? 'bg-emerald-900/30 border border-emerald-900/40'
-                                      : day.count === 1
-                                        ? 'bg-red-900/50 border border-red-900/60 activity-cell-glow-1'
-                                        : day.count === 2
-                                          ? 'bg-red-700/60 border border-red-700/50 activity-cell-glow-2'
-                                          : 'bg-red-500/80 border border-red-500/60 activity-cell-glow-3'
-                                    }
-                                    ${isToday ? 'ring-1 ring-zinc-400 ring-offset-1 ring-offset-[#09090b]' : ''}
-                                    group-hover:scale-150 group-hover:z-10
-                                    ${hasOrders ? 'group-hover:shadow-[0_0_12px_rgba(239,68,68,0.5)]' : 'group-hover:shadow-[0_0_8px_rgba(16,185,129,0.3)]'}
-                                  `}
-                                />
-                                {/* Tooltip */}
-                                <div className="
-                                  absolute bottom-full left-1/2 -translate-x-1/2 mb-2
-                                  opacity-0 group-hover:opacity-100 transition-opacity duration-150
-                                  pointer-events-none z-[100]
-                                ">
-                                  <div className="bg-zinc-900 border border-zinc-700 rounded px-2 py-1.5 shadow-xl whitespace-nowrap">
-                                    <div className="text-[10px] text-zinc-400 font-mono">
-                                      {new Date(day.dateStr + 'T12:00:00').toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
-                                    </div>
-                                    <div className={`text-[11px] font-medium ${day.count > 0 ? 'text-red-400' : 'text-emerald-400'}`}>
-                                      {day.count === 0 ? '✓ No orders' : `${day.count} order${day.count > 1 ? 's' : ''}`}
-                                    </div>
-                                  </div>
-                                  <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-px border-4 border-transparent border-t-zinc-700" />
-                                </div>
-                              </div>
-                            );
-                          })}
-                        </div>
-                      ));
-                    })()}
-                  </div>
-                </div>
+          {/* Stats for selected year/all time */}
+          {selectedYear === 'all' ? (
+            <div className="text-center mb-6">
+              <div className="inline-flex items-baseline gap-1">
+                <span className={`text-4xl sm:text-5xl font-bold font-mono ${allTimeStats.successRate >= 70 ? 'text-emerald-400' : allTimeStats.successRate >= 50 ? 'text-yellow-400' : 'text-red-400'}`}>
+                  {allTimeStats.successRate}%
+                </span>
+                <span className="text-zinc-600 text-sm uppercase tracking-wider">success rate</span>
+              </div>
+              <div className="text-[10px] text-zinc-600 mt-1">
+                {allTimeStats.cleanDays.toLocaleString()} of {allTimeStats.totalDays.toLocaleString()} days without ordering
+              </div>
+              <div className="text-[10px] text-red-400/60 mt-1 font-mono">
+                ${allTimeStats.totalSpent.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} total damage
               </div>
             </div>
+          ) : selectedYearData && (
+            <div className="text-center mb-6">
+              <div className="inline-flex items-baseline gap-1">
+                <span className={`text-4xl sm:text-5xl font-bold font-mono ${selectedYearData.successRate >= 70 ? 'text-emerald-400' : selectedYearData.successRate >= 50 ? 'text-yellow-400' : 'text-red-400'}`}>
+                  {selectedYearData.successRate}%
+                </span>
+                <span className="text-zinc-600 text-sm uppercase tracking-wider">success rate</span>
+              </div>
+              <div className="text-[10px] text-zinc-600 mt-1">
+                {selectedYearData.cleanDays} of {selectedYearData.totalDays} days without ordering
+              </div>
+              <div className="text-[10px] text-red-400/60 mt-1 font-mono">
+                ${selectedYearData.totalSpent.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} spent this year
+              </div>
+            </div>
+          )}
+
+          {/* Activity Grid - by year or summary */}
+          <div className="mb-6">
+            {selectedYear === 'all' ? (
+              /* All years stacked vertically */
+              <div className="space-y-6">
+                {[...yearActivities].reverse().map((ya) => (
+                  <div key={ya.year} className="border border-zinc-800/50 rounded-lg p-4 bg-zinc-900/20">
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-sm font-mono text-zinc-400">{ya.year}</span>
+                      <div className="flex items-center gap-3 text-[10px] text-zinc-600">
+                        <span>{ya.totalOrders} orders</span>
+                        <span className="text-red-400/60">${ya.totalSpent.toLocaleString(undefined, { maximumFractionDigits: 0 })}</span>
+                        <span className={ya.successRate >= 70 ? 'text-emerald-400' : ya.successRate >= 50 ? 'text-yellow-400' : 'text-red-400'}>
+                          {ya.successRate}%
+                        </span>
+                      </div>
+                    </div>
+                    <div className="overflow-x-auto pb-2">
+                      <YearGrid yearData={ya} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : selectedYearData && (
+              /* Single year grid */
+              <div className="flex justify-center pb-2 overflow-x-auto">
+                <YearGrid yearData={selectedYearData} />
+              </div>
+            )}
 
             {/* Legend */}
-            <div className="flex justify-center items-center gap-4 mt-3">
+            <div className="flex justify-center items-center gap-4 mt-4">
               <div className="flex items-center gap-1.5">
                 <div className="w-[10px] h-[10px] rounded-[2px] bg-emerald-900/30 border border-emerald-900/40" />
                 <span className="text-[9px] text-zinc-500">no orders</span>
@@ -423,11 +527,15 @@ export default function Home() {
           {/* Secondary stats */}
           <div className="flex justify-center items-stretch gap-2 sm:gap-3 mb-5">
             <div className="bg-zinc-900/40 border border-zinc-800/60 rounded-lg px-3 sm:px-4 py-2 text-center">
-              <div className="text-lg sm:text-xl font-bold text-zinc-400 font-mono">{activity.totalOrders}</div>
+              <div className="text-lg sm:text-xl font-bold text-zinc-400 font-mono">
+                {selectedYear === 'all' ? allTimeStats.totalOrders : selectedYearData?.totalOrders ?? 0}
+              </div>
               <div className="text-[8px] sm:text-[9px] text-zinc-600 uppercase tracking-wider">orders</div>
             </div>
             <div className="bg-zinc-900/40 border border-zinc-800/60 rounded-lg px-3 sm:px-4 py-2 text-center">
-              <div className="text-lg sm:text-xl font-bold text-zinc-500 font-mono">{activity.totalDays}</div>
+              <div className="text-lg sm:text-xl font-bold text-zinc-500 font-mono">
+                {selectedYear === 'all' ? allTimeStats.totalDays.toLocaleString() : selectedYearData?.totalDays ?? 0}
+              </div>
               <div className="text-[8px] sm:text-[9px] text-zinc-600 uppercase tracking-wider">days tracked</div>
             </div>
           </div>
@@ -435,10 +543,13 @@ export default function Home() {
           {/* Top enablers */}
           <div className="text-center">
             <span className="text-[9px] text-zinc-700 uppercase tracking-wider">
-              most ordered from:{" "}
+              top enablers{selectedYear !== 'all' ? ` in ${selectedYear}` : ''}:{" "}
             </span>
             <span className="text-[10px] text-zinc-500 font-mono">
-              {topRestaurants.map(([name, count]) => `${name} (${count})`).join(" · ")}
+              {topRestaurants.length > 0
+                ? topRestaurants.map(([name, count]) => `${name} (${count})`).join(" · ")
+                : 'none yet'
+              }
             </span>
           </div>
         </div>
