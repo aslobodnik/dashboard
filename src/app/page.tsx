@@ -201,33 +201,26 @@ function YearGrid({ yearData }: { yearData: YearActivity }) {
   });
 
   return (
-    <div className="relative">
+    <div className="inline-block min-w-max">
       {/* Month labels */}
-      <div className="flex gap-[2px] mb-1 h-3 ml-5">
-        {monthLabels.map((m, i) => {
-          const nextIndex = monthLabels[i + 1]?.weekIndex ?? weeks.length;
-          const span = nextIndex - m.weekIndex;
-          return (
-            <div
-              key={`${year}-month-${i}`}
-              className="text-[8px] text-zinc-600 font-mono"
-              style={{
-                position: 'absolute',
-                left: `${20 + m.weekIndex * 15}px`,
-              }}
-            >
-              {m.month}
-            </div>
-          );
-        })}
+      <div className="relative h-3 ml-5 mb-1">
+        {monthLabels.map((m, i) => (
+          <div
+            key={`${year}-month-${i}`}
+            className="absolute text-[8px] text-zinc-600 font-mono"
+            style={{ left: `${m.weekIndex * 13}px` }}
+          >
+            {m.month}
+          </div>
+        ))}
       </div>
 
-      <div className="flex gap-3 mt-4">
+      <div className="flex gap-2">
         {/* Day labels */}
-        <div className="flex flex-col gap-[3px]">
+        <div className="flex flex-col gap-[2px] flex-shrink-0">
           {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((d, i) => (
-            <div key={`${year}-day-${i}`} className="h-[11px] sm:h-[13px] flex items-center">
-              <span className="text-[8px] text-zinc-600 w-3 text-right font-mono">{d}</span>
+            <div key={`${year}-day-${i}`} className="h-[10px] sm:h-[11px] flex items-center">
+              <span className="text-[7px] text-zinc-600 w-3 text-right font-mono">{d}</span>
             </div>
           ))}
         </div>
@@ -238,14 +231,14 @@ function YearGrid({ yearData }: { yearData: YearActivity }) {
             <div key={`${year}-week-${weekIndex}`} className="flex flex-col gap-[2px]">
               {week.map((day) => {
                 if (day.count === -1) {
-                  return <div key={day.dateStr} className="w-[11px] h-[11px] sm:w-[13px] sm:h-[13px]" />;
+                  return <div key={day.dateStr} className="w-[10px] h-[10px] sm:w-[11px] sm:h-[11px]" />;
                 }
                 const isToday = day.dateStr === new Date().toISOString().split('T')[0];
                 return (
                   <div key={day.dateStr} className="group relative hover:z-[90]">
                     <div
                       className={`
-                        w-[11px] h-[11px] sm:w-[13px] sm:h-[13px] rounded-[2px] transition-all duration-200
+                        w-[10px] h-[10px] sm:w-[11px] sm:h-[11px] rounded-[2px] transition-all duration-200
                         ${day.count === 0
                           ? 'bg-emerald-900/30 border border-emerald-900/40'
                           : day.count === 1
@@ -351,11 +344,11 @@ export default function Home() {
       </header>
 
       {/* Main Timer Section */}
-      <main className="relative z-10 flex-1 flex flex-col items-center justify-center px-4 -mt-16">
+      <main className="relative z-10 flex-1 flex flex-col items-center justify-center px-4 -mt-4 sm:-mt-16">
         {time.days >= 1 ? (
           /* 1+ days: Days hero with subordinate ticking clock */
           <>
-            <div className="text-center fade-up mt-8">
+            <div className="text-center fade-up mt-4 sm:mt-8">
               <div className="timer-digit breathe inline-flex items-baseline">
                 <span className="text-[5rem] sm:text-[7rem] md:text-[8rem] font-bold text-white leading-none">{time.days}</span>
                 <span className="text-zinc-500 text-xl sm:text-2xl md:text-3xl uppercase tracking-[0.2em] ml-3 sm:ml-4 font-medium">
@@ -413,14 +406,14 @@ export default function Home() {
         <div className="max-w-4xl mx-auto px-4">
 
           {/* Year Tabs */}
-          <div className="flex justify-center mb-6">
-            <div className="inline-flex items-center gap-1 bg-zinc-900/60 border border-zinc-800/80 rounded-lg p-1">
+          <div className="flex justify-center mb-6 overflow-x-auto px-2">
+            <div className="inline-flex items-center gap-0.5 sm:gap-1 bg-zinc-900/60 border border-zinc-800/80 rounded-lg p-1 min-w-max">
               {yearActivities.map((ya) => (
                 <button
                   key={ya.year}
                   onClick={() => setSelectedYear(ya.year)}
                   className={`
-                    px-3 py-1.5 rounded-md text-xs font-mono transition-all duration-200
+                    px-2 sm:px-3 py-1.5 rounded-md text-[10px] sm:text-xs font-mono transition-all duration-200
                     ${selectedYear === ya.year
                       ? 'bg-zinc-800 text-zinc-200 shadow-inner'
                       : 'text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/50'
@@ -430,11 +423,11 @@ export default function Home() {
                   {ya.year}
                 </button>
               ))}
-              <div className="w-px h-5 bg-zinc-700 mx-1" />
+              <div className="w-px h-5 bg-zinc-700 mx-0.5 sm:mx-1" />
               <button
                 onClick={() => setSelectedYear('all')}
                 className={`
-                  px-3 py-1.5 rounded-md text-xs font-mono transition-all duration-200
+                  px-2 sm:px-3 py-1.5 rounded-md text-[10px] sm:text-xs font-mono transition-all duration-200
                   ${selectedYear === 'all'
                     ? 'bg-zinc-800 text-zinc-200 shadow-inner'
                     : 'text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/50'
@@ -483,20 +476,20 @@ export default function Home() {
           <div className="mb-6">
             {selectedYear === 'all' ? (
               /* All years stacked vertically */
-              <div className="space-y-6">
+              <div className="space-y-4">
                 {[...yearActivities].reverse().map((ya) => (
-                  <div key={ya.year} className="border border-zinc-800/50 rounded-lg p-4 bg-zinc-900/20">
-                    <div className="flex items-center justify-between mb-3">
+                  <div key={ya.year} className="border border-zinc-800/50 rounded-lg p-3 sm:p-4 bg-zinc-900/20">
+                    <div className="flex items-center justify-between mb-3 flex-wrap gap-2">
                       <span className="text-sm font-mono text-zinc-400">{ya.year}</span>
-                      <div className="flex items-center gap-3 text-[10px] text-zinc-600">
-                        <span>{ya.totalOrders} orders</span>
+                      <div className="flex items-center gap-2 sm:gap-3 text-[9px] sm:text-[10px] text-zinc-600">
+                        <span>{ya.totalOrders}</span>
                         <span className="text-red-400/60">${ya.totalSpent.toLocaleString(undefined, { maximumFractionDigits: 0 })}</span>
                         <span className={ya.successRate >= 70 ? 'text-emerald-400' : ya.successRate >= 50 ? 'text-yellow-400' : 'text-red-400'}>
                           {ya.successRate}%
                         </span>
                       </div>
                     </div>
-                    <div className="overflow-x-auto pb-2">
+                    <div className="overflow-x-auto pb-2 -mx-3 px-3 sm:mx-0 sm:px-0">
                       <YearGrid yearData={ya} />
                     </div>
                   </div>
